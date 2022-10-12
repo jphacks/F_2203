@@ -1,0 +1,26 @@
+{
+  "name": "F_2203",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jphacks/F_2203.git",
+  "author": "putcho01",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "dev": "run-p dev:*",
+    "dev:front": "yarn workspace frontend dev",
+    "build": "run-p build:*",
+    "build:front": "yarn workspace frontend build",
+    "start": "run-p dev:*",
+    "start:front": "yarn workspace frontend start",
+    "lint": "run-p lint:*",
+    "lint:front": "yarn workspace frontend lint",
+    "format": "run-p format:*",
+    "format:front": "yarn workspace frontend format"
+  }
+}
