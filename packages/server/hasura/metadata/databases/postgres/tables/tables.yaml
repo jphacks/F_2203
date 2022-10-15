@@ -1,1 +1,4 @@
-[]
+- "!include public_artists.yaml"
+- "!include public_favoriteArtists.yaml"
+- "!include public_posts.yaml"
+- "!include public_users.yaml"
