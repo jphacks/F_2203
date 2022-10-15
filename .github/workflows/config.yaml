@@ -32,4 +32,3 @@ jobs:
       - run: yarn lint:frontend
 
       - run: yarn build:front
-        env:
