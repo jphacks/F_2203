@@ -10,7 +10,6 @@ const Login: FC = () => {
     const user = useAuthUser()
 
     useEffect(() => {
-        console.log(user)
         if (user != null && !user.isAnonymous) {
             router.push("/")
         }
@@ -19,7 +18,6 @@ const Login: FC = () => {
     const logIn = async () => {
         try {
             await authUseCase.signIn(dispatch)
-            router.push("/")
         } catch (err) {
             console.error(err)
         }
