@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useReducer } from "react"
-import authReducer from "@/reducers/authReducer"
-import { useAuthUser } from "@/hooks/useAuth"
 import { useRouter } from "next/router"
+import React, { FC, useEffect, useReducer } from "react"
+import { useAuthUser } from "@/hooks/useAuth"
+import authReducer from "@/reducers/authReducer"
 import { authUseCase } from "@/useCases"
 
 const Login: FC = () => {
@@ -10,16 +10,14 @@ const Login: FC = () => {
     const user = useAuthUser()
 
     useEffect(() => {
-        console.log(user)
         if (user != null && !user.isAnonymous) {
             router.push("/")
         }
-    }, [user])
+    }, [user, router])
 
     const logIn = async () => {
         try {
             await authUseCase.signIn(dispatch)
-            router.push("/")
         } catch (err) {
             console.error(err)
         }
