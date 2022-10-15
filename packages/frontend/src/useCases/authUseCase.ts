@@ -1,6 +1,6 @@
-import { auth } from "../lib/firebase"
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { Dispatch } from "react"
+import { auth } from "../lib/firebase"
 import { Action } from "@/reducers/authReducer"
 
 export default class AuthUseCase {
