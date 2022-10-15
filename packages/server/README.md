@@ -18,7 +18,7 @@ docker-compose up
 2. hasura 起動
 
 ```bash
-npx hasura console --envfile .env.de
+npx hasura console --envfile .env.dev
 ```
 
 http://localhost:9695/ にアクセス
