@@ -12,6 +12,7 @@
     ]
   },
   "scripts": {
+    "install:front": "yarn workspace frontend install",
     "dev": "run-p dev:*",
     "dev:front": "yarn workspace frontend dev",
     "build": "run-p build:*",
