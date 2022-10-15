@@ -29,6 +29,6 @@ jobs:
 
       - run: yarn install:front
 
-      - run: yarn lint:frontend
+      - run: yarn lint:front
 
       - run: yarn build:front
