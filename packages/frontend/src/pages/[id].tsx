@@ -1,9 +1,10 @@
 import { GetServerSideProps, NextPageWithLayout } from 'next'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Layout } from '@/components/Layout'
 import Loading from '@/components/Loading'
 import NoContent from '@/components/NoContent'
 import { GetUserByCustomIdQuery } from '@/generated/graphql'
+import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
 
 type Props = {
@@ -11,6 +12,20 @@ type Props = {
 }
 
 const Profile: NextPageWithLayout<Props> = ({ user }) => {
+  const [isMine, setIsMine] = useState<boolean>(false)
+  const authUser = useAuthUser()
+  const authInitialized = useAuthInitialized()
+
+  useEffect(() => {
+    if (authUser?.uid === user.uid) {
+      setIsMine(true)
+    }
+  }, [authUser?.uid, user.uid])
+
+  if (!authInitialized) {
+    return <Loading />
+  }
+
   return (
     <div className='bg_main-color min-h-screen'>
       <div className='w-screen bg-white py-6'>
@@ -24,7 +39,7 @@ const Profile: NextPageWithLayout<Props> = ({ user }) => {
         </div>
       </div>
       <div className='my-auto justify-center items-center flex max-w-2xl mx-auto'>
-        <NoContent />
+        <NoContent isMine={isMine} />
       </div>
     </div>
   )
