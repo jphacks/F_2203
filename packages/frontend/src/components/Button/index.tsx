@@ -1,6 +1,4 @@
-import { chdir } from 'process';
 import React from 'react'
-
 interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color: 'primary' | 'secondary' | 'acccent'
   children: React.ReactNode
