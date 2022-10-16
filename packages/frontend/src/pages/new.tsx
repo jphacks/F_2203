@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import AsyncSelect from 'react-select/async'
@@ -7,6 +8,7 @@ import { ActionMeta, SingleValue } from 'react-select/dist/declarations/src/type
 import styles from "../styles/New.module.css"
 import { GetArtistsApiResponse } from './api/artists'
 import { SearchBox } from '@/components/SearchBox'
+import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth';
 import fetcher from '@/lib/fetcher'
 
 type FormValues = {
@@ -28,6 +30,17 @@ const New: NextPage = () => {
     formState: { errors },
   } = useForm<FormValues>()
   const location_name = watch('location_name')
+
+  const router = useRouter()
+  const user = useAuthUser()
+  const authInitialized = useAuthInitialized()
+
+  useEffect(() => {
+    if ((user === null || user.isAnonymous) && authInitialized) {
+      router.push('/login')
+    }
+  }, [user, router])
+
 
   useEffect(() => {
     register('location_name', { required: '場所を入力してください' })
@@ -56,6 +69,10 @@ const New: NextPage = () => {
     return fetcher(`/api/artists?keyword=${input}`).then((res) => {
       return res?.artists ?? []
     })
+  }
+
+  if (!authInitialized) {
+    return <div>Loading...</div>
   }
 
   return (
