@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import AsyncSelect from 'react-select/async'
 import { ActionMeta, SingleValue } from 'react-select/dist/declarations/src/types'
+import styles from "../styles/New.module.css"
 import { GetArtistsApiResponse } from './api/artists'
 import { SearchBox } from '@/components/SearchBox'
 import fetcher from '@/lib/fetcher'
@@ -153,9 +154,9 @@ const New: NextPage = () => {
               <div className='text-center'>
                 <button
                   type='submit'
-                  className='text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center'
+                  className={styles.button}
                 >
-                  この内容で保存する
+                  <span>この内容で記録する</span><span>✨</span>
                 </button>
               </div>
             </form>

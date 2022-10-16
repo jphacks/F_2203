@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --main-bg-color: linear-gradient(90deg, #001b36 0%, #000000 100%);
+  --main-bg-color: #f0f5f9;
   --text-primary: #333333;
   --text-sub: #bababa;
-  --primary: #0162b9;
+  --primary: #3b82f6;
   --accent: #001b36;
 }
 
@@ -25,6 +25,19 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+/* button */
+.bt_color-primary {
+  background-color: var(--primary);
+  color: white;
+}
+.bt_color-primary:hover {
+  opacity: 0.7;
+}
+
+.bt_color-secondary {
+  background-color: white;
 }
 
 /* @media (prefers-color-scheme: dark) {
