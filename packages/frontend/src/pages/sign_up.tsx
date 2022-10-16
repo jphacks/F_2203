@@ -1,9 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { ChangeEvent, useState } from 'react';
+import { useRouter } from 'next/router';
+import { ChangeEvent, useEffect, useReducer, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import toast from 'react-hot-toast';
+import toast from 'react-hot-toast'
 import styles from '../styles/SignUp.module.css'
+import { useAuthUser } from '@/hooks/useAuth';
+import { createHasuraClient } from '@/lib/hasuraClient';
 
 type FormValues = {
   name: string
@@ -13,8 +16,27 @@ type FormValues = {
 }
 
 const SignUp: NextPage = () => {
-  const [preview, setPreview] = useState('');
-  const [fileName, setFileName] = useState<string>("")
+  const [preview, setPreview] = useState('')
+  const [fileName, setFileName] = useState<string>('')
+
+  const router = useRouter()
+  const user = useAuthUser()
+  const hasuraClient = createHasuraClient(null)
+
+  useEffect(() => {
+    const data = async() => {
+      if (user === null || user.isAnonymous) {
+        router.push('/login')
+      } else {
+        const uid = user.uid
+        const data = await hasuraClient.getUserByUid({ uid: uid })
+        if (data.user != null) {//登録済みユーザーの場合
+          router.push(`/${data.user?.custom_id}`)
+        }
+      }
+    }
+    data()
+  }, [user, router])
 
   const {
     register,
@@ -24,40 +46,44 @@ const SignUp: NextPage = () => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      toast.promise(
-        uploadImage(data.avatarImg),
-        {
-          loading: 'Uploading...',
-          success: '画像のアップロードに成功しました!🎉',
-          error: `画像のアップロードに失敗しました😥 もう一度試してみてください`,
-        },
-      );
-      //TODO: ユーザー登録
-      //TODO: 完了したら/:idページへ遷移させる
-
+      //ユーザー登録
+      await hasuraClient.CreateUser({
+        uid: user?.uid as string,
+        name: data.name,
+        custom_id: data.name_id,
+        bio: data.bio,
+      })
+      toast.success('ユーザー登録登録が完了しました!🎉');
+      //完了したら/:idページへ遷移させる
+      router.push(`/${data.name_id}`)
     } catch (e) {
-
+      toast.error(`ユーザー登録登録に失敗しました😥 もう一度試してみてください`)
     }
   }
 
-    // Upload image function
-    const uploadImage = async (file: File) => {
-    };
+  // Upload image function
+  const uploadImage = async (file: File) => {
+    // toast.promise(, {
+    //     loading: 'Uploading...',
+    //     success: '画像のアップロードに成功しました!🎉',
+    //     error: `画像のアップロードに失敗しました😥 もう一度試してみてください`,
+    // })
+  }
 
-    //ローカルから画像を追加する
-    const handeChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
-      event.preventDefault()
-      if (event.target.files == null) {
-        return
-      }
-      const file = event.target.files[0]
-      if (file == null) {
-        return
-      }
-
-      setPreview(window.URL.createObjectURL(file));
-      setFileName(file.name);
+  //ローカルから画像を追加する
+  const handeChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault()
+    if (event.target.files == null) {
+      return
     }
+    const file = event.target.files[0]
+    if (file == null) {
+      return
+    }
+
+    setPreview(window.URL.createObjectURL(file))
+    setFileName(file.name)
+  }
 
   return (
     <div className={styles.container}>
@@ -69,27 +95,27 @@ const SignUp: NextPage = () => {
 
       <main className='mx-auto my-auto min-h-screen justify-center items-center flex'>
         <div>
-          <h2 className='text-3xl mb-6 text-center text-white'>新規作成</h2>
+          <h2 className='text-3xl mb-6 text-center'>新規作成</h2>
           <div className='px-12 py-10 bg-white rounded border-t-4'>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <label htmlFor="avatarImg">
+              <label htmlFor='avatarImg'>
                 <div className='text-center'>
-                  <div className="avatar cursor-pointer">
-                    <div className="w-24 rounded">
-                      <img src={preview ? preview : "/images/avatar.png"} />
+                  <div className='avatar cursor-pointer'>
+                    <div className='w-24 rounded'>
+                      <img src={preview ? preview : '/images/avatar.png'} />
                     </div>
                   </div>
                 </div>
                 <div className='text-center mb-6 cursor-pointer'>
                   <input
-                      id="avatarImg"
-                      type="file"
-                      accept="image/png,image/jpeg"
-                      name="avatarImg"
-                      className="sr-only"
+                    id='avatarImg'
+                    type='file'
+                    accept='image/png,image/jpeg'
+                    name='avatarImg'
+                    className='sr-only'
                     onChange={(e) => handeChangeFile(e)}
                   />
-                  <p>{preview ? fileName: 'アイコンを変更する' }</p>
+                  <p>{preview ? fileName : 'アイコンを変更する'}</p>
                 </div>
               </label>
               <div className='mb-6 items-center'>
@@ -150,7 +176,7 @@ const SignUp: NextPage = () => {
                 <button
                   type='submit'
                   className='text-white hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-600 font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center'
-                  style={{backgroundColor: '#0162b9'}}
+                  style={{ backgroundColor: '#0162b9' }}
                 >
                   はじめる
                 </button>

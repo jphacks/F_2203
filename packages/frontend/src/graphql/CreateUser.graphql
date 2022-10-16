@@ -1,0 +1,19 @@
+mutation CreateUser(
+  $uid: String!
+  $name: String = ""
+  $custom_id: String!
+  $bio: String = ""
+  $avatar_url: String = ""
+) {
+  insert_users_one(
+    object: { uid: $uid, name: $name, custom_id: $custom_id, bio: $bio, avatar_url: $avatar_url }
+  ) {
+    uid
+    name
+    bio
+    avatar_url
+    custom_id
+    instagram_id
+    twitter_id
+  }
+}
