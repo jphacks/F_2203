@@ -1,0 +1,11 @@
+query getUserByUid($uid: String!) {
+  user: users_by_pk(uid: $uid) {
+    avatar_url
+    bio
+    id
+    custom_id
+    name
+    instagram_id
+    twitter_id
+  }
+}
