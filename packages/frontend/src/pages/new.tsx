@@ -1,16 +1,19 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import AsyncSelect from 'react-select/async'
 import { ActionMeta, SingleValue } from 'react-select/dist/declarations/src/types'
 import { GetArtistsApiResponse } from './api/artists'
+import { SearchBox } from '@/components/SearchBox'
 import fetcher from '@/lib/fetcher'
 
 type FormValues = {
   title: string
   desc: string
-  location: string
+  location_name: string
+  location_lat: number
+  location_lng: number
   link: string
   artist: string
 }
@@ -19,8 +22,17 @@ const New: NextPage = () => {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<FormValues>()
+  const location_name = watch('location_name')
+
+  useEffect(() => {
+    register('location_name', { required: '場所を入力してください' })
+    register('location_lat', { required: true, min: -90, max: 90 })
+    register('location_lng', { required: true, min: -180, max: 180 })
+  }, [register])
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data, artist)
@@ -116,20 +128,16 @@ const New: NextPage = () => {
                 />
               </div>
               <div className='mb-6 items-center'>
-                <input
-                  id='location'
-                  type='text'
-                  className='bg-gray-50 border border-gray-300 text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-500 block w-full p-2.5'
-                  placeholder='場所 📍'
-                  {...register('location', {
-                    maxLength: {
-                      value: 20,
-                      message: '20文字以内で入力してください。',
-                    },
-                  })}
+                <SearchBox
+                  onSelectAddress={(location_name, location_lat, location_lng) => {
+                    setValue('location_name', location_name)
+                    location_lat ? setValue('location_lat', location_lat) : undefined
+                    location_lng ? setValue('location_lng', location_lng) : undefined
+                  }}
+                  defaultValue=''
                 />
-                {errors?.location && (
-                  <p className='text-xs text-red-600'>{errors.location.message}</p>
+                {errors.location_name && (
+                  <p className='text-xs text-red-600'>{errors.location_name.message}</p>
                 )}
               </div>
               <div className='mb-6 items-center'>
