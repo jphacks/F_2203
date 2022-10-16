@@ -1,3 +1,50 @@
 table:
   schema: public
   name: users
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+        - id
+        - uid
+        - custom_id
+        - name
+        - bio
+        - avatar_url
+        - twitter_id
+        - instagram_id
+        - created_at
+        - updated_at
+      backend_only: false
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - avatar_url
+        - bio
+        - custom_id
+        - instagram_id
+        - name
+        - twitter_id
+        - uid
+        - id
+        - created_at
+        - updated_at
+      filter: {}
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - avatar_url
+        - bio
+        - custom_id
+        - instagram_id
+        - name
+        - twitter_id
+        - uid
+        - id
+        - created_at
+        - updated_at
+      filter: {}
+      check: null
