@@ -6,9 +6,7 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div>
-        <p>
-          © 2022 優勝するドルオタ
-        </p>
+        <p>© 2022 優勝するドルオタ</p>
       </div>
     </footer>
   )

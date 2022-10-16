@@ -1,15 +1,16 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import AsyncSelect from 'react-select/async'
 import { ActionMeta, SingleValue } from 'react-select/dist/declarations/src/types'
-import styles from "../styles/New.module.css"
+import styles from '../styles/New.module.css'
 import { GetArtistsApiResponse } from './api/artists'
 import { SearchBox } from '@/components/SearchBox'
-import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth';
+import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
 import fetcher from '@/lib/fetcher'
+import Loading from '@/components/Loading'
 
 type FormValues = {
   title: string
@@ -41,7 +42,6 @@ const New: NextPage = () => {
     }
   }, [user, router])
 
-
   useEffect(() => {
     register('location_name', { required: '場所を入力してください' })
     register('location_lat', { required: true, min: -90, max: 90 })
@@ -72,7 +72,7 @@ const New: NextPage = () => {
   }
 
   if (!authInitialized) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   return (
@@ -169,11 +169,9 @@ const New: NextPage = () => {
                 {errors?.link && <p className='text-xs text-red-600'>{errors.link.message}</p>}
               </div>
               <div className='text-center'>
-                <button
-                  type='submit'
-                  className={styles.button}
-                >
-                  <span>この内容で記録する</span><span>✨</span>
+                <button type='submit' className={styles.button}>
+                  <span>この内容で記録する</span>
+                  <span>✨</span>
                 </button>
               </div>
             </form>

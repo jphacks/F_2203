@@ -1,13 +1,13 @@
-import { useContext } from "react"
-import { AuthContext } from "../context/authContext"
+import { useContext } from 'react'
+import { AuthContext } from '../context/authContext'
 export const useAuth = () => {
-    return useContext(AuthContext)
+  return useContext(AuthContext)
 }
 
 export const useAuthUser = () => {
-    return useAuth().user
+  return useAuth().user
 }
 
 export const useAuthInitialized = () => {
-    return useAuth().initialized
+  return useAuth().initialized
 }
