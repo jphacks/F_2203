@@ -7,10 +7,10 @@ import AsyncSelect from 'react-select/async'
 import { ActionMeta, SingleValue } from 'react-select/dist/declarations/src/types'
 import styles from '../styles/New.module.css'
 import { GetArtistsApiResponse } from './api/artists'
+import Loading from '@/components/Loading'
 import { SearchBox } from '@/components/SearchBox'
 import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
 import fetcher from '@/lib/fetcher'
-import Loading from '@/components/Loading'
 
 type FormValues = {
   title: string
