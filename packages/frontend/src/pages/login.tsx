@@ -19,7 +19,6 @@ const Login: FC = () => {
       if (user != null && !user.isAnonymous) {
         const uid = user?.uid
         const data = await hasuraClient.getUserByUid({ uid: uid })
-        console.log(data)
         if (data.user != null) {//登録済みユーザーの場合
           return router.push(`/${data.user?.custom_id}`)
         } else {
