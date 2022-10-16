@@ -3,13 +3,17 @@ import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import toast, { Toaster } from 'react-hot-toast';
 import AsyncSelect from 'react-select/async'
 import { ActionMeta, SingleValue } from 'react-select/dist/declarations/src/types'
 import styles from "../styles/New.module.css"
 import { GetArtistsApiResponse } from './api/artists'
+import { GetArtistApiResponse } from './api/artists/[ids]';
 import { SearchBox } from '@/components/SearchBox'
 import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth';
+import { useQueryUser } from '@/hooks/useUser';
 import fetcher from '@/lib/fetcher'
+import { createHasuraClient } from '@/lib/hasuraClient';
 
 type FormValues = {
   title: string
@@ -34,6 +38,9 @@ const New: NextPage = () => {
   const router = useRouter()
   const user = useAuthUser()
   const authInitialized = useAuthInitialized()
+  const hasuraClient = createHasuraClient(null)
+
+  const {data: userData,} = useQueryUser(user?.uid ?? '')
 
   useEffect(() => {
     if ((user === null || user.isAnonymous) && authInitialized) {
@@ -48,11 +55,41 @@ const New: NextPage = () => {
     register('location_lng', { required: true, min: -180, max: 180 })
   }, [register])
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data, artist)
+  const [artistId, setArtist] = useState<string | undefined>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    toast.loading('ちょっと待ってね...✋🏻');
+    try {
+      setIsLoading(true)
+      const artistsData: GetArtistApiResponse = await fetcher(`/api/artists/${artistId}`)
+      const artist = artistsData.artists[0]
+      await hasuraClient.UpsertPostWithArtist({
+        uid: user?.uid as string,
+        title: data.title,
+        message: data.desc,
+        location_name: data.location_name,
+        location_lat: data.location_lat,
+        location_lng: data.location_lng,
+        link: data.link,
+        spotify_id: artist.id,
+        name: artist.name,
+        image_url: artist.images[2].url
+      })
+
+      toast.dismiss();
+      toast.success('履歴を追加しました!🎉');
+      setIsLoading(false)
+      //完了したら/:idページへ遷移させる
+      router.push(`/${userData?.user?.custom_id}`)
+    } catch (e) {
+      toast.dismiss();
+      console.error(e)
+      toast.error('Something is wrong!🥺');
+      setIsLoading(false)
+    }
   }
 
-  const [artist, setArtist] = useState<string | undefined>()
 
   const handleInputChange = (
     newValue: SingleValue<GetArtistsApiResponse>,
@@ -77,6 +114,7 @@ const New: NextPage = () => {
 
   return (
     <div className='bg-[#F0F5F9]'>
+      <Toaster />
       <div className='my-auto min-h-screen justify-center items-center flex max-w-2xl mx-auto'>
         <div className='w-full mx-4'>
           <h2 className='text-xl mb-6 text-center'>新しい足跡を記録</h2>
@@ -172,6 +210,7 @@ const New: NextPage = () => {
                 <button
                   type='submit'
                   className={styles.button}
+                  disabled={isLoading}
                 >
                   <span>この内容で記録する</span><span>✨</span>
                 </button>
