@@ -8,3 +8,11 @@ export const useQueryUser = (uid: string) => {
     queryFn: () => hasuraClient.getUserByUid({uid: uid})
   })
 }
+
+export const useQueryUserByCustomId = (customId: string) => {
+  const hasuraClient = createHasuraClient(null)
+  return useQuery({
+    queryKey: ['getUser', customId],
+    queryFn: () => hasuraClient.GetUserByCustomId({customId: customId})
+  })
+}

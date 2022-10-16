@@ -1572,6 +1572,13 @@ export type CreateUserMutationVariables = Exact<{
 
 export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', uid: string, name?: string | null, bio?: string | null, avatar_url?: string | null, custom_id?: string | null, instagram_id?: string | null, twitter_id?: string | null } | null };
 
+export type GetUserByCustomIdQueryVariables = Exact<{
+  customId: Scalars['String'];
+}>;
+
+
+export type GetUserByCustomIdQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', name?: string | null, bio?: string | null, avatar_url?: string | null, twitter_id?: string | null, instagram_id?: string | null, custom_id?: string | null, uid: string, id: number }> };
+
 export type GetUserByUidQueryVariables = Exact<{
   uid: Scalars['String'];
 }>;
@@ -1592,6 +1599,20 @@ export const CreateUserDocument = gql`
     custom_id
     instagram_id
     twitter_id
+  }
+}
+    `;
+export const GetUserByCustomIdDocument = gql`
+    query GetUserByCustomId($customId: String!) {
+  users(where: {custom_id: {_eq: $customId}}) {
+    name
+    bio
+    avatar_url
+    twitter_id
+    instagram_id
+    custom_id
+    uid
+    id
   }
 }
     `;
@@ -1618,6 +1639,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     CreateUser(variables: CreateUserMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateUserMutation>(CreateUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateUser', 'mutation');
+    },
+    GetUserByCustomId(variables: GetUserByCustomIdQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserByCustomIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserByCustomIdQuery>(GetUserByCustomIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetUserByCustomId', 'query');
     },
     getUserByUid(variables: GetUserByUidQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserByUidQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserByUidQuery>(GetUserByUidDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserByUid', 'query');
