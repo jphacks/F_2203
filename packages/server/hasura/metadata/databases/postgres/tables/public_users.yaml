@@ -1,6 +1,21 @@
 table:
   schema: public
   name: users
+array_relationships:
+  - name: favoriteArtists
+    using:
+      foreign_key_constraint_on:
+        column: uid
+        table:
+          schema: public
+          name: favoriteArtists
+  - name: posts
+    using:
+      foreign_key_constraint_on:
+        column: uid
+        table:
+          schema: public
+          name: posts
 insert_permissions:
   - role: user
     permission:
