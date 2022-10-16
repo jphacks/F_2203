@@ -26,6 +26,7 @@
     "react-hook-form": "^7.36.1",
     "react-hot-toast": "^2.4.0",
     "react-select": "^5.4.0",
+    "recoil": "^0.7.6",
     "use-google-maps-script": "^0.1.2",
     "use-places-autocomplete": "^4.0.0"
   },
