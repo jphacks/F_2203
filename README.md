@@ -19,13 +19,16 @@
 ## 開発技術
 ### 活用した技術
 #### API・データ
-* 
-* 
+* Spotify API
+* Maps JavaScript API
+* Geocoding API
+* Geolocation API
+* Places API
 
 #### フレームワーク・ライブラリ・モジュール
-* 
-* 
-
+* フロント： TypeScript / React / Next.js / Tailwind.css
+* バックエンド： hasura / PostgreSQL
+* その他： Github Actions / Vercel / Firebae (auth, storage)
 #### デバイス
 * 
 * 
@@ -38,3 +41,19 @@
 #### 製品に取り入れた研究内容（データ・ソフトウェアなど）（※アカデミック部門の場合のみ提出必須）
 * 
 * 
+
+---
+
+## 開発
+### パッケージ構成
+```
+packages/
+  ├─ frontend/  クライアントサイド
+  └─ server/ サーバーサイド
+```
+### 開発
+[frontend README](https://github.com/jphacks/F_2203/tree/development/packages/frontend#readme)
+[backend README](https://github.com/jphacks/F_2203/tree/development/packages/server)
+
+
+  
