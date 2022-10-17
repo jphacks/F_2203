@@ -1,10 +1,12 @@
 import { GetServerSideProps, NextPageWithLayout } from 'next'
 import React, { useEffect, useState } from 'react'
+import FavoriteArtists from '@/components/FavoriteArtists'
 import { Layout } from '@/components/Layout'
 import Loading from '@/components/Loading'
 import NoContent from '@/components/NoContent'
 import { GetUserByCustomIdQuery } from '@/generated/graphql'
 import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
+import { useQueryUserPosts } from '@/hooks/useUser'
 import { createHasuraClient } from '@/lib/hasuraClient'
 
 type Props = {
@@ -15,6 +17,7 @@ const Profile: NextPageWithLayout<Props> = ({ user }) => {
   const [isMine, setIsMine] = useState<boolean>(false)
   const authUser = useAuthUser()
   const authInitialized = useAuthInitialized()
+  const { data: postsData, isLoading } = useQueryUserPosts(user.uid)
 
   useEffect(() => {
     if (authUser?.uid === user.uid) {
@@ -39,7 +42,13 @@ const Profile: NextPageWithLayout<Props> = ({ user }) => {
         </div>
       </div>
       <div className='my-auto justify-center items-center flex max-w-2xl mx-auto'>
-        <NoContent isMine={isMine} />
+        {postsData?.posts.length == 0 ? (
+          <NoContent isMine={isMine} />
+        ) : (
+          <div>
+            <FavoriteArtists uid={user.uid} />
+          </div>
+        )}
       </div>
     </div>
   )

@@ -1,14 +1,14 @@
-import React from 'react';
-import Card from '../Card';
-import Loading from '../Loading';
+import React from 'react'
+import Card from '../Card'
+import Loading from '../Loading'
 import styles from './style.module.css'
-import { useQueryFavoriteArtists } from '@/hooks/useUser';
+import { useQueryFavoriteArtists } from '@/hooks/useUser'
 
 type IFavoriteArtists = {
   uid: string
 }
 
-const FavoriteArtists: React.FC<IFavoriteArtists> = ({uid}) => {
+const FavoriteArtists: React.FC<IFavoriteArtists> = ({ uid }) => {
   const { data, isLoading } = useQueryFavoriteArtists(uid)
   const artists = data?.artists
 
@@ -26,7 +26,11 @@ const FavoriteArtists: React.FC<IFavoriteArtists> = ({uid}) => {
           className={`max-w-2xl mx-auto pt-10 flex flex-row overflow-x-scroll px-4 ${styles.mask}`}
         >
           {artists?.map((ats, idx) => (
-            <Card key={ats.artist?.spotify_id} name={ats.artist?.name ?? ''} url={ats.artist?.image_url ?? ''} />
+            <Card
+              key={ats.artist?.spotify_id}
+              name={ats.artist?.name ?? ''}
+              url={ats.artist?.image_url ?? ''}
+            />
           ))}
         </div>
       </div>
