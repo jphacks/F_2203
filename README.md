@@ -28,7 +28,7 @@
 #### フレームワーク・ライブラリ・モジュール
 * フロント： TypeScript / React / Next.js / Tailwind.css
 * バックエンド： hasura / PostgreSQL
-* その他： Github Actions / Vercel / Firebae (auth, storage)
+* その他： Github Actions / Firebase (auth, storage) / Vercel / 
 #### デバイス
 * 
 * 
