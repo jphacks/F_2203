@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 import styles from '../styles/SignUp.module.css'
 import { useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
+import { signUpUseCase } from '@/useCases';
 
 type FormValues = {
   name: string
@@ -48,12 +49,12 @@ const SignUp: NextPage = () => {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       //ユーザー登録
-      await hasuraClient.CreateUser({
-        uid: user?.uid as string,
-        name: data.name,
-        custom_id: data.name_id,
-        bio: data.bio,
-      })
+      await signUpUseCase.createUser(
+        user?.uid as string,
+        data.name,
+        data.name_id,
+        data.bio,
+      )
       toast.success('ユーザー登録登録が完了しました!🎉')
       //完了したら/:idページへ遷移させる
       router.push(`/${data.name_id}`)
@@ -171,6 +172,7 @@ const SignUp: NextPage = () => {
                   className='bg-gray-50 border border-gray-300 text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5'
                   placeholder='自己紹介'
                   rows={4}
+                  {...register('bio')}
                 />
               </div>
               <div className='text-center'>
