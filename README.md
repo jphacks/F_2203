@@ -51,9 +51,10 @@ packages/
   ├─ frontend/  クライアントサイド
   └─ server/ サーバーサイド
 ```
-### 開発
-[frontend README](https://github.com/jphacks/F_2203/tree/development/packages/frontend#readme)
-[backend README](https://github.com/jphacks/F_2203/tree/development/packages/server)
+### 環境構築
+それぞれのパッケージのREADMEを参照してください。
+- [frontend README](https://github.com/jphacks/F_2203/tree/development/packages/frontend#readme)
+- [backend README](https://github.com/jphacks/F_2203/tree/development/packages/server)
 
 
   
