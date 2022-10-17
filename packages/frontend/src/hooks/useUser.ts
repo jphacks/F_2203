@@ -16,3 +16,11 @@ export const useQueryUserByCustomId = (customId: string) => {
     queryFn: () => hasuraClient.GetUserByCustomId({ customId: customId }),
   })
 }
+
+export const useQueryFavoriteArtists = (uid: string) => {
+  const hasuraClient = createHasuraClient(null)
+  return useQuery({
+    queryKey: ['getFavoriteArtists', uid],
+    queryFn: () => hasuraClient.GetFavoriteArtistsByUid({ uid: uid }),
+  })
+}
