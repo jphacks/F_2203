@@ -1,15 +1,19 @@
 import { Dialog, Transition } from '@headlessui/react'
 import React, { Fragment, useState } from 'react'
+import Confetti from 'react-confetti'
+import useWindowSize from 'react-use/lib/useWindowSize'
 import styles from "./style.module.css"
 
 type IConfettiModal = {
   userName: string,
+  userCustmoId: string,
   artistName: string,
   artistImage: string,
 }
 
-const ConfettiModal: React.FC<IConfettiModal> = ({userName, artistName, artistImage}) => {
-  let [isOpen, setIsOpen] = useState(true)
+const ConfettiModal: React.FC<IConfettiModal> = ({userName, userCustmoId, artistName, artistImage}) => {
+  const [isOpen, setIsOpen] = useState(true)
+  const { width, height } = useWindowSize()
 
   function closeModal() {
     setIsOpen(false)
@@ -19,18 +23,21 @@ const ConfettiModal: React.FC<IConfettiModal> = ({userName, artistName, artistIm
     setIsOpen(true)
   }
 
+  let hostname = ``
+  if (typeof window !== 'undefined') {
+    hostname = window.location.hostname;
+ }
+
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center">
-        <button
-          type="button"
-          onClick={openModal}
-          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-        >
-          Open dialog
-        </button>
-      </div>
-
+      {isOpen &&
+        <Confetti
+          width={width}
+          height={height}
+        numberOfPieces={150}
+        gravity={0.05}
+        />
+      }
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -68,18 +75,19 @@ const ConfettiModal: React.FC<IConfettiModal> = ({userName, artistName, artistIm
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-gray-500">
-                      {userName}さんと{artistName}さんとの初めての履歴が登録されました！！やったね！
+                      {userName}さんと{artistName}さんとの初めての履歴が追加されました！！やったね！
                     </p>
                   </div>
 
                   <div className="mt-4 justify-between flex mx-0">
-                    <button
-                      type="button"
+                    <a
+                      href={`http://twitter.com/share?url=${hostname}/${userCustmoId}&text=${artistName}との初めての履歴を追加したよ！`}
+                      target="_blank"
+                      rel="noreferrer"
                       className="rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
                     >
                       Twitterでシェアする
-                    </button>
+                    </a>
                     <button
                       type="button"
                       className="rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black-900 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
