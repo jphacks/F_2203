@@ -12,7 +12,7 @@ server/hasure/.env.dev
 1. docker 起動
 
 ```bash
-docker-compose up
+docker-compose up --build
 ```
 
 2. hasura 起動
