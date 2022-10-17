@@ -2,7 +2,7 @@ import fetcher from '@/lib/fetcher'
 import { createHasuraClient, HasuraClient } from '@/lib/hasuraClient'
 import { GetArtistApiResponse } from '@/pages/api/artists/[ids]'
 
-export default class postUseCase {
+export default class PostUseCase {
   hasuraClient: HasuraClient
   constructor() {
     this.hasuraClient = createHasuraClient(null)

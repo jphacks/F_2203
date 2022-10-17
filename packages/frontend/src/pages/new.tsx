@@ -14,8 +14,7 @@ import { SearchBox } from '@/components/SearchBox'
 import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
 import { useQueryUser } from '@/hooks/useUser'
 import fetcher from '@/lib/fetcher'
-import { createHasuraClient } from '@/lib/hasuraClient'
-import postUseCase from '@/useCases/postUseCase'
+import { postUseCase } from '@/useCases';
 
 type FormValues = {
   title: string
@@ -40,9 +39,6 @@ const New: NextPage = () => {
   const router = useRouter()
   const user = useAuthUser()
   const authInitialized = useAuthInitialized()
-  const hasuraClient = createHasuraClient(null)
-
-  const useCase = new postUseCase()
 
   const { data: userData } = useQueryUser(user?.uid ?? '')
 
@@ -72,8 +68,8 @@ const New: NextPage = () => {
     toast.loading('ちょっと待ってね...✋🏻')
     try {
       setIsLoading(true)
-      const artist = await useCase.getArtistInfo(artistId ?? '')
-      await useCase.insertItem(
+      const artist = await postUseCase.getArtistInfo(artistId ?? '')
+      await postUseCase.insertItem(
         user?.uid as string,
         data.title,
         data.desc,
