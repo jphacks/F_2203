@@ -1920,6 +1920,13 @@ export type CreateUserMutationVariables = Exact<{
 
 export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', uid: string, name?: string | null, bio?: string | null, avatar_url?: string | null, custom_id?: string | null, instagram_id?: string | null, twitter_id?: string | null } | null };
 
+export type GetUserByCustomIdQueryVariables = Exact<{
+  customId: Scalars['String'];
+}>;
+
+
+export type GetUserByCustomIdQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', name?: string | null, bio?: string | null, avatar_url?: string | null, twitter_id?: string | null, instagram_id?: string | null, custom_id?: string | null, uid: string, id: number }> };
+
 export type UpsertPostWithArtistMutationVariables = Exact<{
   title: Scalars['String'];
   message?: InputMaybe<Scalars['String']>;
@@ -1959,6 +1966,20 @@ export const CreateUserDocument = gql`
   }
 }
     `;
+export const GetUserByCustomIdDocument = gql`
+    query GetUserByCustomId($customId: String!) {
+  users(where: {custom_id: {_eq: $customId}}) {
+    name
+    bio
+    avatar_url
+    twitter_id
+    instagram_id
+    custom_id
+    uid
+    id
+  }
+}
+    `;
 export const UpsertPostWithArtistDocument = gql`
     mutation UpsertPostWithArtist($title: String!, $message: String = "", $location_name: String!, $location_lng: float8!, $location_lat: float8!, $link: String = "", $uid: String!, $spotify_id: String!, $name: String!, $image_url: String!) {
   insert_posts_one(
@@ -1991,6 +2012,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     CreateUser(variables: CreateUserMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateUserMutation>(CreateUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateUser', 'mutation');
+    },
+    GetUserByCustomId(variables: GetUserByCustomIdQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserByCustomIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserByCustomIdQuery>(GetUserByCustomIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetUserByCustomId', 'query');
     },
     UpsertPostWithArtist(variables: UpsertPostWithArtistMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpsertPostWithArtistMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpsertPostWithArtistMutation>(UpsertPostWithArtistDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpsertPostWithArtist', 'mutation');

@@ -1,16 +1,17 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast, { Toaster } from 'react-hot-toast';
 import AsyncSelect from 'react-select/async'
 import { ActionMeta, SingleValue } from 'react-select/dist/declarations/src/types'
-import styles from "../styles/New.module.css"
+import styles from '../styles/New.module.css'
 import { GetArtistsApiResponse } from './api/artists'
 import { GetArtistApiResponse } from './api/artists/[ids]';
+import Loading from '@/components/Loading'
 import { SearchBox } from '@/components/SearchBox'
-import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth';
+import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
 import { useQueryUser } from '@/hooks/useUser';
 import fetcher from '@/lib/fetcher'
 import { createHasuraClient } from '@/lib/hasuraClient';
@@ -47,7 +48,6 @@ const New: NextPage = () => {
       router.push('/login')
     }
   }, [user, router])
-
 
   useEffect(() => {
     register('location_name', { required: '場所を入力してください' })
@@ -109,7 +109,7 @@ const New: NextPage = () => {
   }
 
   if (!authInitialized) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   return (

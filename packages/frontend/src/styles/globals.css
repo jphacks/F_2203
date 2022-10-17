@@ -40,6 +40,10 @@ a {
   background-color: white;
 }
 
+.bg_main-color {
+  background-color: var(--main-bg-color);
+}
+
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

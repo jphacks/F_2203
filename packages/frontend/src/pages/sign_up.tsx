@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 import { ChangeEvent, useEffect, useReducer, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import styles from '../styles/SignUp.module.css'
-import { useAuthUser } from '@/hooks/useAuth';
-import { createHasuraClient } from '@/lib/hasuraClient';
+import { useAuthUser } from '@/hooks/useAuth'
+import { createHasuraClient } from '@/lib/hasuraClient'
 
 type FormValues = {
   name: string
@@ -24,13 +24,14 @@ const SignUp: NextPage = () => {
   const hasuraClient = createHasuraClient(null)
 
   useEffect(() => {
-    const data = async() => {
+    const data = async () => {
       if (user === null || user.isAnonymous) {
         router.push('/login')
       } else {
         const uid = user.uid
         const data = await hasuraClient.getUserByUid({ uid: uid })
-        if (data.user != null) {//登録済みユーザーの場合
+        if (data.user != null) {
+          //登録済みユーザーの場合
           router.push(`/${data.user?.custom_id}`)
         }
       }
@@ -53,7 +54,7 @@ const SignUp: NextPage = () => {
         custom_id: data.name_id,
         bio: data.bio,
       })
-      toast.success('ユーザー登録登録が完了しました!🎉');
+      toast.success('ユーザー登録登録が完了しました!🎉')
       //完了したら/:idページへ遷移させる
       router.push(`/${data.name_id}`)
     } catch (e) {

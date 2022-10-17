@@ -1,10 +1,9 @@
 import Link from 'next/link'
 import React from 'react'
-import { useAuthUser } from '@/hooks/useAuth';
+import { auth } from '@/lib/firebase'
 
 const Header = () => {
-  const user = useAuthUser()
-  const isLoggedIn = user != null && !user.isAnonymous
+  const isLoggedIn = auth.currentUser != null
 
   return (
     <div className='navbar bg-white'>
@@ -13,7 +12,7 @@ const Header = () => {
       </div>
       {isLoggedIn ? (
         <div className='flex-none'>
-          <div className='dropdown dropdown-end'>
+          {/* <div className='dropdown dropdown-end'>
             <label tabIndex={0} className='btn btn-ghost btn-circle avatar'>
               <div className='w-10 rounded-full'>
                 <img src='https://placeimg.com/80/80/people' />
@@ -33,7 +32,7 @@ const Header = () => {
                 <a>Logout</a>
               </li>
             </ul>
-          </div>
+          </div> */}
           <div className='dropdown dropdown-end'>
             <Link href='/new'>
               <a className='text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-md text-sm sm:w-auto px-5 py-2.5 text-center'>
