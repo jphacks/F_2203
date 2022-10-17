@@ -1,0 +1,12 @@
+query GetUserByCustomId($customId: String!) {
+  users(where: { custom_id: { _eq: $customId } }) {
+    name
+    bio
+    avatar_url
+    twitter_id
+    instagram_id
+    custom_id
+    uid
+    id
+  }
+}
