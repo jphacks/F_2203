@@ -1,0 +1,11 @@
+query GetUserPostsByUid($uid: String!) {
+  posts(where: { uid: { _eq: $uid } }) {
+    title
+    message
+    location_name
+    location_lng
+    location_lat
+    link
+    id
+  }
+}
