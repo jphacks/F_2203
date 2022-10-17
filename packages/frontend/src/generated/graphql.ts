@@ -14,6 +14,7 @@ export type Scalars = {
   Int: number
   Float: number
   date: any
+  float8: any
   timestamp: any
 }
 
@@ -67,11 +68,55 @@ export type String_Comparison_Exp = {
 export type Artists = {
   __typename?: 'artists'
   created_at: Scalars['timestamp']
+  /** fetch data from the table: "favoriteArtists" */
+  favoriteArtists: Array<FavoriteArtists>
+  /** An aggregate relationship */
+  favoriteArtists_aggregate: FavoriteArtists_Aggregate
   id: Scalars['Int']
   image_url?: Maybe<Scalars['String']>
   name?: Maybe<Scalars['String']>
+  /** An array relationship */
+  posts: Array<Posts>
+  /** An aggregate relationship */
+  posts_aggregate: Posts_Aggregate
   spotify_id: Scalars['String']
   updated_at: Scalars['timestamp']
+}
+
+/** columns and relationships of "artists" */
+export type ArtistsFavoriteArtistsArgs = {
+  distinct_on?: InputMaybe<Array<FavoriteArtists_Select_Column>>
+  limit?: InputMaybe<Scalars['Int']>
+  offset?: InputMaybe<Scalars['Int']>
+  order_by?: InputMaybe<Array<FavoriteArtists_Order_By>>
+  where?: InputMaybe<FavoriteArtists_Bool_Exp>
+}
+
+/** columns and relationships of "artists" */
+export type ArtistsFavoriteArtists_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<FavoriteArtists_Select_Column>>
+  limit?: InputMaybe<Scalars['Int']>
+  offset?: InputMaybe<Scalars['Int']>
+  order_by?: InputMaybe<Array<FavoriteArtists_Order_By>>
+  where?: InputMaybe<FavoriteArtists_Bool_Exp>
+}
+
+/** columns and relationships of "artists" */
+export type ArtistsPostsArgs = {
+  distinct_on?: InputMaybe<Array<Posts_Select_Column>>
+  limit?: InputMaybe<Scalars['Int']>
+  offset?: InputMaybe<Scalars['Int']>
+  order_by?: InputMaybe<Array<Posts_Order_By>>
+  where?: InputMaybe<Posts_Bool_Exp>
+}
+
+/** columns and relationships of "artists" */
+export type ArtistsPosts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Posts_Select_Column>>
+  limit?: InputMaybe<Scalars['Int']>
+  offset?: InputMaybe<Scalars['Int']>
+  order_by?: InputMaybe<Array<Posts_Order_By>>
+  where?: InputMaybe<Posts_Bool_Exp>
 }
 
 /** aggregated selection of "artists" */
@@ -115,9 +160,11 @@ export type Artists_Bool_Exp = {
   _not?: InputMaybe<Artists_Bool_Exp>
   _or?: InputMaybe<Array<Artists_Bool_Exp>>
   created_at?: InputMaybe<Timestamp_Comparison_Exp>
+  favoriteArtists?: InputMaybe<FavoriteArtists_Bool_Exp>
   id?: InputMaybe<Int_Comparison_Exp>
   image_url?: InputMaybe<String_Comparison_Exp>
   name?: InputMaybe<String_Comparison_Exp>
+  posts?: InputMaybe<Posts_Bool_Exp>
   spotify_id?: InputMaybe<String_Comparison_Exp>
   updated_at?: InputMaybe<Timestamp_Comparison_Exp>
 }
@@ -138,9 +185,11 @@ export type Artists_Inc_Input = {
 /** input type for inserting data into table "artists" */
 export type Artists_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamp']>
+  favoriteArtists?: InputMaybe<FavoriteArtists_Arr_Rel_Insert_Input>
   id?: InputMaybe<Scalars['Int']>
   image_url?: InputMaybe<Scalars['String']>
   name?: InputMaybe<Scalars['String']>
+  posts?: InputMaybe<Posts_Arr_Rel_Insert_Input>
   spotify_id?: InputMaybe<Scalars['String']>
   updated_at?: InputMaybe<Scalars['timestamp']>
 }
@@ -176,6 +225,13 @@ export type Artists_Mutation_Response = {
   returning: Array<Artists>
 }
 
+/** input type for inserting object relation for remote table "artists" */
+export type Artists_Obj_Rel_Insert_Input = {
+  data: Artists_Insert_Input
+  /** upsert condition */
+  on_conflict?: InputMaybe<Artists_On_Conflict>
+}
+
 /** on_conflict condition type for table "artists" */
 export type Artists_On_Conflict = {
   constraint: Artists_Constraint
@@ -186,9 +242,11 @@ export type Artists_On_Conflict = {
 /** Ordering options when selecting data from "artists". */
 export type Artists_Order_By = {
   created_at?: InputMaybe<Order_By>
+  favoriteArtists_aggregate?: InputMaybe<FavoriteArtists_Aggregate_Order_By>
   id?: InputMaybe<Order_By>
   image_url?: InputMaybe<Order_By>
   name?: InputMaybe<Order_By>
+  posts_aggregate?: InputMaybe<Posts_Aggregate_Order_By>
   spotify_id?: InputMaybe<Order_By>
   updated_at?: InputMaybe<Order_By>
 }
@@ -298,11 +356,15 @@ export type Date_Comparison_Exp = {
 /** columns and relationships of "favoriteArtists" */
 export type FavoriteArtists = {
   __typename?: 'favoriteArtists'
+  /** An object relationship */
+  artist?: Maybe<Artists>
   created_at?: Maybe<Scalars['timestamp']>
   id: Scalars['Int']
   spotify_id?: Maybe<Scalars['String']>
   uid?: Maybe<Scalars['String']>
   updated_at?: Maybe<Scalars['timestamp']>
+  /** An object relationship */
+  user?: Maybe<Users>
 }
 
 /** aggregated selection of "favoriteArtists" */
@@ -334,10 +396,37 @@ export type FavoriteArtists_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
+/** order by aggregate values of table "favoriteArtists" */
+export type FavoriteArtists_Aggregate_Order_By = {
+  avg?: InputMaybe<FavoriteArtists_Avg_Order_By>
+  count?: InputMaybe<Order_By>
+  max?: InputMaybe<FavoriteArtists_Max_Order_By>
+  min?: InputMaybe<FavoriteArtists_Min_Order_By>
+  stddev?: InputMaybe<FavoriteArtists_Stddev_Order_By>
+  stddev_pop?: InputMaybe<FavoriteArtists_Stddev_Pop_Order_By>
+  stddev_samp?: InputMaybe<FavoriteArtists_Stddev_Samp_Order_By>
+  sum?: InputMaybe<FavoriteArtists_Sum_Order_By>
+  var_pop?: InputMaybe<FavoriteArtists_Var_Pop_Order_By>
+  var_samp?: InputMaybe<FavoriteArtists_Var_Samp_Order_By>
+  variance?: InputMaybe<FavoriteArtists_Variance_Order_By>
+}
+
+/** input type for inserting array relation for remote table "favoriteArtists" */
+export type FavoriteArtists_Arr_Rel_Insert_Input = {
+  data: Array<FavoriteArtists_Insert_Input>
+  /** upsert condition */
+  on_conflict?: InputMaybe<FavoriteArtists_On_Conflict>
+}
+
 /** aggregate avg on columns */
 export type FavoriteArtists_Avg_Fields = {
   __typename?: 'favoriteArtists_avg_fields'
   id?: Maybe<Scalars['Float']>
+}
+
+/** order by avg() on columns of table "favoriteArtists" */
+export type FavoriteArtists_Avg_Order_By = {
+  id?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "favoriteArtists". All fields are combined with a logical 'AND'. */
@@ -345,17 +434,21 @@ export type FavoriteArtists_Bool_Exp = {
   _and?: InputMaybe<Array<FavoriteArtists_Bool_Exp>>
   _not?: InputMaybe<FavoriteArtists_Bool_Exp>
   _or?: InputMaybe<Array<FavoriteArtists_Bool_Exp>>
+  artist?: InputMaybe<Artists_Bool_Exp>
   created_at?: InputMaybe<Timestamp_Comparison_Exp>
   id?: InputMaybe<Int_Comparison_Exp>
   spotify_id?: InputMaybe<String_Comparison_Exp>
   uid?: InputMaybe<String_Comparison_Exp>
   updated_at?: InputMaybe<Timestamp_Comparison_Exp>
+  user?: InputMaybe<Users_Bool_Exp>
 }
 
 /** unique or primary key constraints on table "favoriteArtists" */
 export enum FavoriteArtists_Constraint {
   /** unique or primary key constraint */
   FavoriteArtistsPkey = 'favoriteArtists_pkey',
+  /** unique or primary key constraint */
+  FavoriteArtistsSpotifyIdUidKey = 'favoriteArtists_spotify_id_uid_key',
 }
 
 /** input type for incrementing numeric columns in table "favoriteArtists" */
@@ -365,11 +458,13 @@ export type FavoriteArtists_Inc_Input = {
 
 /** input type for inserting data into table "favoriteArtists" */
 export type FavoriteArtists_Insert_Input = {
+  artist?: InputMaybe<Artists_Obj_Rel_Insert_Input>
   created_at?: InputMaybe<Scalars['timestamp']>
   id?: InputMaybe<Scalars['Int']>
   spotify_id?: InputMaybe<Scalars['String']>
   uid?: InputMaybe<Scalars['String']>
   updated_at?: InputMaybe<Scalars['timestamp']>
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>
 }
 
 /** aggregate max on columns */
@@ -382,6 +477,15 @@ export type FavoriteArtists_Max_Fields = {
   updated_at?: Maybe<Scalars['timestamp']>
 }
 
+/** order by max() on columns of table "favoriteArtists" */
+export type FavoriteArtists_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>
+  id?: InputMaybe<Order_By>
+  spotify_id?: InputMaybe<Order_By>
+  uid?: InputMaybe<Order_By>
+  updated_at?: InputMaybe<Order_By>
+}
+
 /** aggregate min on columns */
 export type FavoriteArtists_Min_Fields = {
   __typename?: 'favoriteArtists_min_fields'
@@ -390,6 +494,15 @@ export type FavoriteArtists_Min_Fields = {
   spotify_id?: Maybe<Scalars['String']>
   uid?: Maybe<Scalars['String']>
   updated_at?: Maybe<Scalars['timestamp']>
+}
+
+/** order by min() on columns of table "favoriteArtists" */
+export type FavoriteArtists_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>
+  id?: InputMaybe<Order_By>
+  spotify_id?: InputMaybe<Order_By>
+  uid?: InputMaybe<Order_By>
+  updated_at?: InputMaybe<Order_By>
 }
 
 /** response of any mutation on the table "favoriteArtists" */
@@ -410,11 +523,13 @@ export type FavoriteArtists_On_Conflict = {
 
 /** Ordering options when selecting data from "favoriteArtists". */
 export type FavoriteArtists_Order_By = {
+  artist?: InputMaybe<Artists_Order_By>
   created_at?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   spotify_id?: InputMaybe<Order_By>
   uid?: InputMaybe<Order_By>
   updated_at?: InputMaybe<Order_By>
+  user?: InputMaybe<Users_Order_By>
 }
 
 /** primary key columns input for table: favoriteArtists */
@@ -451,10 +566,20 @@ export type FavoriteArtists_Stddev_Fields = {
   id?: Maybe<Scalars['Float']>
 }
 
+/** order by stddev() on columns of table "favoriteArtists" */
+export type FavoriteArtists_Stddev_Order_By = {
+  id?: InputMaybe<Order_By>
+}
+
 /** aggregate stddev_pop on columns */
 export type FavoriteArtists_Stddev_Pop_Fields = {
   __typename?: 'favoriteArtists_stddev_pop_fields'
   id?: Maybe<Scalars['Float']>
+}
+
+/** order by stddev_pop() on columns of table "favoriteArtists" */
+export type FavoriteArtists_Stddev_Pop_Order_By = {
+  id?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_samp on columns */
@@ -463,10 +588,20 @@ export type FavoriteArtists_Stddev_Samp_Fields = {
   id?: Maybe<Scalars['Float']>
 }
 
+/** order by stddev_samp() on columns of table "favoriteArtists" */
+export type FavoriteArtists_Stddev_Samp_Order_By = {
+  id?: InputMaybe<Order_By>
+}
+
 /** aggregate sum on columns */
 export type FavoriteArtists_Sum_Fields = {
   __typename?: 'favoriteArtists_sum_fields'
   id?: Maybe<Scalars['Int']>
+}
+
+/** order by sum() on columns of table "favoriteArtists" */
+export type FavoriteArtists_Sum_Order_By = {
+  id?: InputMaybe<Order_By>
 }
 
 /** update columns of table "favoriteArtists" */
@@ -489,16 +624,44 @@ export type FavoriteArtists_Var_Pop_Fields = {
   id?: Maybe<Scalars['Float']>
 }
 
+/** order by var_pop() on columns of table "favoriteArtists" */
+export type FavoriteArtists_Var_Pop_Order_By = {
+  id?: InputMaybe<Order_By>
+}
+
 /** aggregate var_samp on columns */
 export type FavoriteArtists_Var_Samp_Fields = {
   __typename?: 'favoriteArtists_var_samp_fields'
   id?: Maybe<Scalars['Float']>
 }
 
+/** order by var_samp() on columns of table "favoriteArtists" */
+export type FavoriteArtists_Var_Samp_Order_By = {
+  id?: InputMaybe<Order_By>
+}
+
 /** aggregate variance on columns */
 export type FavoriteArtists_Variance_Fields = {
   __typename?: 'favoriteArtists_variance_fields'
   id?: Maybe<Scalars['Float']>
+}
+
+/** order by variance() on columns of table "favoriteArtists" */
+export type FavoriteArtists_Variance_Order_By = {
+  id?: InputMaybe<Order_By>
+}
+
+/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
+export type Float8_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['float8']>
+  _gt?: InputMaybe<Scalars['float8']>
+  _gte?: InputMaybe<Scalars['float8']>
+  _in?: InputMaybe<Array<Scalars['float8']>>
+  _is_null?: InputMaybe<Scalars['Boolean']>
+  _lt?: InputMaybe<Scalars['float8']>
+  _lte?: InputMaybe<Scalars['float8']>
+  _neq?: InputMaybe<Scalars['float8']>
+  _nin?: InputMaybe<Array<Scalars['float8']>>
 }
 
 /** mutation root */
@@ -717,18 +880,22 @@ export enum Order_By {
 /** columns and relationships of "posts" */
 export type Posts = {
   __typename?: 'posts'
+  /** An object relationship */
+  artist?: Maybe<Artists>
   created_at: Scalars['timestamp']
   date?: Maybe<Scalars['date']>
   id: Scalars['Int']
   link?: Maybe<Scalars['String']>
-  location_lat?: Maybe<Scalars['Int']>
-  location_lng?: Maybe<Scalars['Int']>
+  location_lat?: Maybe<Scalars['float8']>
+  location_lng?: Maybe<Scalars['float8']>
   location_name?: Maybe<Scalars['String']>
   message?: Maybe<Scalars['String']>
   spotify_id?: Maybe<Scalars['String']>
   title?: Maybe<Scalars['String']>
   uid?: Maybe<Scalars['String']>
   updated_at?: Maybe<Scalars['timestamp']>
+  /** An object relationship */
+  user?: Maybe<Users>
 }
 
 /** aggregated selection of "posts" */
@@ -760,6 +927,28 @@ export type Posts_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
+/** order by aggregate values of table "posts" */
+export type Posts_Aggregate_Order_By = {
+  avg?: InputMaybe<Posts_Avg_Order_By>
+  count?: InputMaybe<Order_By>
+  max?: InputMaybe<Posts_Max_Order_By>
+  min?: InputMaybe<Posts_Min_Order_By>
+  stddev?: InputMaybe<Posts_Stddev_Order_By>
+  stddev_pop?: InputMaybe<Posts_Stddev_Pop_Order_By>
+  stddev_samp?: InputMaybe<Posts_Stddev_Samp_Order_By>
+  sum?: InputMaybe<Posts_Sum_Order_By>
+  var_pop?: InputMaybe<Posts_Var_Pop_Order_By>
+  var_samp?: InputMaybe<Posts_Var_Samp_Order_By>
+  variance?: InputMaybe<Posts_Variance_Order_By>
+}
+
+/** input type for inserting array relation for remote table "posts" */
+export type Posts_Arr_Rel_Insert_Input = {
+  data: Array<Posts_Insert_Input>
+  /** upsert condition */
+  on_conflict?: InputMaybe<Posts_On_Conflict>
+}
+
 /** aggregate avg on columns */
 export type Posts_Avg_Fields = {
   __typename?: 'posts_avg_fields'
@@ -768,23 +957,32 @@ export type Posts_Avg_Fields = {
   location_lng?: Maybe<Scalars['Float']>
 }
 
+/** order by avg() on columns of table "posts" */
+export type Posts_Avg_Order_By = {
+  id?: InputMaybe<Order_By>
+  location_lat?: InputMaybe<Order_By>
+  location_lng?: InputMaybe<Order_By>
+}
+
 /** Boolean expression to filter rows from the table "posts". All fields are combined with a logical 'AND'. */
 export type Posts_Bool_Exp = {
   _and?: InputMaybe<Array<Posts_Bool_Exp>>
   _not?: InputMaybe<Posts_Bool_Exp>
   _or?: InputMaybe<Array<Posts_Bool_Exp>>
+  artist?: InputMaybe<Artists_Bool_Exp>
   created_at?: InputMaybe<Timestamp_Comparison_Exp>
   date?: InputMaybe<Date_Comparison_Exp>
   id?: InputMaybe<Int_Comparison_Exp>
   link?: InputMaybe<String_Comparison_Exp>
-  location_lat?: InputMaybe<Int_Comparison_Exp>
-  location_lng?: InputMaybe<Int_Comparison_Exp>
+  location_lat?: InputMaybe<Float8_Comparison_Exp>
+  location_lng?: InputMaybe<Float8_Comparison_Exp>
   location_name?: InputMaybe<String_Comparison_Exp>
   message?: InputMaybe<String_Comparison_Exp>
   spotify_id?: InputMaybe<String_Comparison_Exp>
   title?: InputMaybe<String_Comparison_Exp>
   uid?: InputMaybe<String_Comparison_Exp>
   updated_at?: InputMaybe<Timestamp_Comparison_Exp>
+  user?: InputMaybe<Users_Bool_Exp>
 }
 
 /** unique or primary key constraints on table "posts" */
@@ -796,24 +994,26 @@ export enum Posts_Constraint {
 /** input type for incrementing numeric columns in table "posts" */
 export type Posts_Inc_Input = {
   id?: InputMaybe<Scalars['Int']>
-  location_lat?: InputMaybe<Scalars['Int']>
-  location_lng?: InputMaybe<Scalars['Int']>
+  location_lat?: InputMaybe<Scalars['float8']>
+  location_lng?: InputMaybe<Scalars['float8']>
 }
 
 /** input type for inserting data into table "posts" */
 export type Posts_Insert_Input = {
+  artist?: InputMaybe<Artists_Obj_Rel_Insert_Input>
   created_at?: InputMaybe<Scalars['timestamp']>
   date?: InputMaybe<Scalars['date']>
   id?: InputMaybe<Scalars['Int']>
   link?: InputMaybe<Scalars['String']>
-  location_lat?: InputMaybe<Scalars['Int']>
-  location_lng?: InputMaybe<Scalars['Int']>
+  location_lat?: InputMaybe<Scalars['float8']>
+  location_lng?: InputMaybe<Scalars['float8']>
   location_name?: InputMaybe<Scalars['String']>
   message?: InputMaybe<Scalars['String']>
   spotify_id?: InputMaybe<Scalars['String']>
   title?: InputMaybe<Scalars['String']>
   uid?: InputMaybe<Scalars['String']>
   updated_at?: InputMaybe<Scalars['timestamp']>
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>
 }
 
 /** aggregate max on columns */
@@ -823,14 +1023,30 @@ export type Posts_Max_Fields = {
   date?: Maybe<Scalars['date']>
   id?: Maybe<Scalars['Int']>
   link?: Maybe<Scalars['String']>
-  location_lat?: Maybe<Scalars['Int']>
-  location_lng?: Maybe<Scalars['Int']>
+  location_lat?: Maybe<Scalars['float8']>
+  location_lng?: Maybe<Scalars['float8']>
   location_name?: Maybe<Scalars['String']>
   message?: Maybe<Scalars['String']>
   spotify_id?: Maybe<Scalars['String']>
   title?: Maybe<Scalars['String']>
   uid?: Maybe<Scalars['String']>
   updated_at?: Maybe<Scalars['timestamp']>
+}
+
+/** order by max() on columns of table "posts" */
+export type Posts_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>
+  date?: InputMaybe<Order_By>
+  id?: InputMaybe<Order_By>
+  link?: InputMaybe<Order_By>
+  location_lat?: InputMaybe<Order_By>
+  location_lng?: InputMaybe<Order_By>
+  location_name?: InputMaybe<Order_By>
+  message?: InputMaybe<Order_By>
+  spotify_id?: InputMaybe<Order_By>
+  title?: InputMaybe<Order_By>
+  uid?: InputMaybe<Order_By>
+  updated_at?: InputMaybe<Order_By>
 }
 
 /** aggregate min on columns */
@@ -840,14 +1056,30 @@ export type Posts_Min_Fields = {
   date?: Maybe<Scalars['date']>
   id?: Maybe<Scalars['Int']>
   link?: Maybe<Scalars['String']>
-  location_lat?: Maybe<Scalars['Int']>
-  location_lng?: Maybe<Scalars['Int']>
+  location_lat?: Maybe<Scalars['float8']>
+  location_lng?: Maybe<Scalars['float8']>
   location_name?: Maybe<Scalars['String']>
   message?: Maybe<Scalars['String']>
   spotify_id?: Maybe<Scalars['String']>
   title?: Maybe<Scalars['String']>
   uid?: Maybe<Scalars['String']>
   updated_at?: Maybe<Scalars['timestamp']>
+}
+
+/** order by min() on columns of table "posts" */
+export type Posts_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>
+  date?: InputMaybe<Order_By>
+  id?: InputMaybe<Order_By>
+  link?: InputMaybe<Order_By>
+  location_lat?: InputMaybe<Order_By>
+  location_lng?: InputMaybe<Order_By>
+  location_name?: InputMaybe<Order_By>
+  message?: InputMaybe<Order_By>
+  spotify_id?: InputMaybe<Order_By>
+  title?: InputMaybe<Order_By>
+  uid?: InputMaybe<Order_By>
+  updated_at?: InputMaybe<Order_By>
 }
 
 /** response of any mutation on the table "posts" */
@@ -868,6 +1100,7 @@ export type Posts_On_Conflict = {
 
 /** Ordering options when selecting data from "posts". */
 export type Posts_Order_By = {
+  artist?: InputMaybe<Artists_Order_By>
   created_at?: InputMaybe<Order_By>
   date?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
@@ -880,6 +1113,7 @@ export type Posts_Order_By = {
   title?: InputMaybe<Order_By>
   uid?: InputMaybe<Order_By>
   updated_at?: InputMaybe<Order_By>
+  user?: InputMaybe<Users_Order_By>
 }
 
 /** primary key columns input for table: posts */
@@ -921,8 +1155,8 @@ export type Posts_Set_Input = {
   date?: InputMaybe<Scalars['date']>
   id?: InputMaybe<Scalars['Int']>
   link?: InputMaybe<Scalars['String']>
-  location_lat?: InputMaybe<Scalars['Int']>
-  location_lng?: InputMaybe<Scalars['Int']>
+  location_lat?: InputMaybe<Scalars['float8']>
+  location_lng?: InputMaybe<Scalars['float8']>
   location_name?: InputMaybe<Scalars['String']>
   message?: InputMaybe<Scalars['String']>
   spotify_id?: InputMaybe<Scalars['String']>
@@ -939,12 +1173,26 @@ export type Posts_Stddev_Fields = {
   location_lng?: Maybe<Scalars['Float']>
 }
 
+/** order by stddev() on columns of table "posts" */
+export type Posts_Stddev_Order_By = {
+  id?: InputMaybe<Order_By>
+  location_lat?: InputMaybe<Order_By>
+  location_lng?: InputMaybe<Order_By>
+}
+
 /** aggregate stddev_pop on columns */
 export type Posts_Stddev_Pop_Fields = {
   __typename?: 'posts_stddev_pop_fields'
   id?: Maybe<Scalars['Float']>
   location_lat?: Maybe<Scalars['Float']>
   location_lng?: Maybe<Scalars['Float']>
+}
+
+/** order by stddev_pop() on columns of table "posts" */
+export type Posts_Stddev_Pop_Order_By = {
+  id?: InputMaybe<Order_By>
+  location_lat?: InputMaybe<Order_By>
+  location_lng?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_samp on columns */
@@ -955,12 +1203,26 @@ export type Posts_Stddev_Samp_Fields = {
   location_lng?: Maybe<Scalars['Float']>
 }
 
+/** order by stddev_samp() on columns of table "posts" */
+export type Posts_Stddev_Samp_Order_By = {
+  id?: InputMaybe<Order_By>
+  location_lat?: InputMaybe<Order_By>
+  location_lng?: InputMaybe<Order_By>
+}
+
 /** aggregate sum on columns */
 export type Posts_Sum_Fields = {
   __typename?: 'posts_sum_fields'
   id?: Maybe<Scalars['Int']>
-  location_lat?: Maybe<Scalars['Int']>
-  location_lng?: Maybe<Scalars['Int']>
+  location_lat?: Maybe<Scalars['float8']>
+  location_lng?: Maybe<Scalars['float8']>
+}
+
+/** order by sum() on columns of table "posts" */
+export type Posts_Sum_Order_By = {
+  id?: InputMaybe<Order_By>
+  location_lat?: InputMaybe<Order_By>
+  location_lng?: InputMaybe<Order_By>
 }
 
 /** update columns of table "posts" */
@@ -999,6 +1261,13 @@ export type Posts_Var_Pop_Fields = {
   location_lng?: Maybe<Scalars['Float']>
 }
 
+/** order by var_pop() on columns of table "posts" */
+export type Posts_Var_Pop_Order_By = {
+  id?: InputMaybe<Order_By>
+  location_lat?: InputMaybe<Order_By>
+  location_lng?: InputMaybe<Order_By>
+}
+
 /** aggregate var_samp on columns */
 export type Posts_Var_Samp_Fields = {
   __typename?: 'posts_var_samp_fields'
@@ -1007,12 +1276,26 @@ export type Posts_Var_Samp_Fields = {
   location_lng?: Maybe<Scalars['Float']>
 }
 
+/** order by var_samp() on columns of table "posts" */
+export type Posts_Var_Samp_Order_By = {
+  id?: InputMaybe<Order_By>
+  location_lat?: InputMaybe<Order_By>
+  location_lng?: InputMaybe<Order_By>
+}
+
 /** aggregate variance on columns */
 export type Posts_Variance_Fields = {
   __typename?: 'posts_variance_fields'
   id?: Maybe<Scalars['Float']>
   location_lat?: Maybe<Scalars['Float']>
   location_lng?: Maybe<Scalars['Float']>
+}
+
+/** order by variance() on columns of table "posts" */
+export type Posts_Variance_Order_By = {
+  id?: InputMaybe<Order_By>
+  location_lat?: InputMaybe<Order_By>
+  location_lng?: InputMaybe<Order_By>
 }
 
 export type Query_Root = {
@@ -1025,13 +1308,13 @@ export type Query_Root = {
   artists_by_pk?: Maybe<Artists>
   /** fetch data from the table: "favoriteArtists" */
   favoriteArtists: Array<FavoriteArtists>
-  /** fetch aggregated fields from the table: "favoriteArtists" */
+  /** An aggregate relationship */
   favoriteArtists_aggregate: FavoriteArtists_Aggregate
   /** fetch data from the table: "favoriteArtists" using primary key columns */
   favoriteArtists_by_pk?: Maybe<FavoriteArtists>
-  /** fetch data from the table: "posts" */
+  /** An array relationship */
   posts: Array<Posts>
-  /** fetch aggregated fields from the table: "posts" */
+  /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>
@@ -1133,13 +1416,13 @@ export type Subscription_Root = {
   artists_by_pk?: Maybe<Artists>
   /** fetch data from the table: "favoriteArtists" */
   favoriteArtists: Array<FavoriteArtists>
-  /** fetch aggregated fields from the table: "favoriteArtists" */
+  /** An aggregate relationship */
   favoriteArtists_aggregate: FavoriteArtists_Aggregate
   /** fetch data from the table: "favoriteArtists" using primary key columns */
   favoriteArtists_by_pk?: Maybe<FavoriteArtists>
-  /** fetch data from the table: "posts" */
+  /** An array relationship */
   posts: Array<Posts>
-  /** fetch aggregated fields from the table: "posts" */
+  /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>
@@ -1251,12 +1534,56 @@ export type Users = {
   bio?: Maybe<Scalars['String']>
   created_at: Scalars['timestamp']
   custom_id?: Maybe<Scalars['String']>
+  /** fetch data from the table: "favoriteArtists" */
+  favoriteArtists: Array<FavoriteArtists>
+  /** An aggregate relationship */
+  favoriteArtists_aggregate: FavoriteArtists_Aggregate
   id: Scalars['Int']
   instagram_id?: Maybe<Scalars['String']>
   name?: Maybe<Scalars['String']>
+  /** An array relationship */
+  posts: Array<Posts>
+  /** An aggregate relationship */
+  posts_aggregate: Posts_Aggregate
   twitter_id?: Maybe<Scalars['String']>
   uid: Scalars['String']
   updated_at: Scalars['timestamp']
+}
+
+/** columns and relationships of "users" */
+export type UsersFavoriteArtistsArgs = {
+  distinct_on?: InputMaybe<Array<FavoriteArtists_Select_Column>>
+  limit?: InputMaybe<Scalars['Int']>
+  offset?: InputMaybe<Scalars['Int']>
+  order_by?: InputMaybe<Array<FavoriteArtists_Order_By>>
+  where?: InputMaybe<FavoriteArtists_Bool_Exp>
+}
+
+/** columns and relationships of "users" */
+export type UsersFavoriteArtists_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<FavoriteArtists_Select_Column>>
+  limit?: InputMaybe<Scalars['Int']>
+  offset?: InputMaybe<Scalars['Int']>
+  order_by?: InputMaybe<Array<FavoriteArtists_Order_By>>
+  where?: InputMaybe<FavoriteArtists_Bool_Exp>
+}
+
+/** columns and relationships of "users" */
+export type UsersPostsArgs = {
+  distinct_on?: InputMaybe<Array<Posts_Select_Column>>
+  limit?: InputMaybe<Scalars['Int']>
+  offset?: InputMaybe<Scalars['Int']>
+  order_by?: InputMaybe<Array<Posts_Order_By>>
+  where?: InputMaybe<Posts_Bool_Exp>
+}
+
+/** columns and relationships of "users" */
+export type UsersPosts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Posts_Select_Column>>
+  limit?: InputMaybe<Scalars['Int']>
+  offset?: InputMaybe<Scalars['Int']>
+  order_by?: InputMaybe<Array<Posts_Order_By>>
+  where?: InputMaybe<Posts_Bool_Exp>
 }
 
 /** aggregated selection of "users" */
@@ -1303,9 +1630,11 @@ export type Users_Bool_Exp = {
   bio?: InputMaybe<String_Comparison_Exp>
   created_at?: InputMaybe<Timestamp_Comparison_Exp>
   custom_id?: InputMaybe<String_Comparison_Exp>
+  favoriteArtists?: InputMaybe<FavoriteArtists_Bool_Exp>
   id?: InputMaybe<Int_Comparison_Exp>
   instagram_id?: InputMaybe<String_Comparison_Exp>
   name?: InputMaybe<String_Comparison_Exp>
+  posts?: InputMaybe<Posts_Bool_Exp>
   twitter_id?: InputMaybe<String_Comparison_Exp>
   uid?: InputMaybe<String_Comparison_Exp>
   updated_at?: InputMaybe<Timestamp_Comparison_Exp>
@@ -1332,9 +1661,11 @@ export type Users_Insert_Input = {
   bio?: InputMaybe<Scalars['String']>
   created_at?: InputMaybe<Scalars['timestamp']>
   custom_id?: InputMaybe<Scalars['String']>
+  favoriteArtists?: InputMaybe<FavoriteArtists_Arr_Rel_Insert_Input>
   id?: InputMaybe<Scalars['Int']>
   instagram_id?: InputMaybe<Scalars['String']>
   name?: InputMaybe<Scalars['String']>
+  posts?: InputMaybe<Posts_Arr_Rel_Insert_Input>
   twitter_id?: InputMaybe<Scalars['String']>
   uid?: InputMaybe<Scalars['String']>
   updated_at?: InputMaybe<Scalars['timestamp']>
@@ -1379,6 +1710,13 @@ export type Users_Mutation_Response = {
   returning: Array<Users>
 }
 
+/** input type for inserting object relation for remote table "users" */
+export type Users_Obj_Rel_Insert_Input = {
+  data: Users_Insert_Input
+  /** upsert condition */
+  on_conflict?: InputMaybe<Users_On_Conflict>
+}
+
 /** on_conflict condition type for table "users" */
 export type Users_On_Conflict = {
   constraint: Users_Constraint
@@ -1392,9 +1730,11 @@ export type Users_Order_By = {
   bio?: InputMaybe<Order_By>
   created_at?: InputMaybe<Order_By>
   custom_id?: InputMaybe<Order_By>
+  favoriteArtists_aggregate?: InputMaybe<FavoriteArtists_Aggregate_Order_By>
   id?: InputMaybe<Order_By>
   instagram_id?: InputMaybe<Order_By>
   name?: InputMaybe<Order_By>
+  posts_aggregate?: InputMaybe<Posts_Aggregate_Order_By>
   twitter_id?: InputMaybe<Order_By>
   uid?: InputMaybe<Order_By>
   updated_at?: InputMaybe<Order_By>
@@ -1550,6 +1890,24 @@ export type GetUserByCustomIdQuery = {
   }>
 }
 
+export type UpsertPostWithArtistMutationVariables = Exact<{
+  title: Scalars['String']
+  message?: InputMaybe<Scalars['String']>
+  location_name: Scalars['String']
+  location_lng: Scalars['float8']
+  location_lat: Scalars['float8']
+  link?: InputMaybe<Scalars['String']>
+  uid: Scalars['String']
+  spotify_id: Scalars['String']
+  name: Scalars['String']
+  image_url: Scalars['String']
+}>
+
+export type UpsertPostWithArtistMutation = {
+  __typename?: 'mutation_root'
+  insert_posts_one?: { __typename?: 'posts'; id: number } | null
+}
+
 export type GetUserByUidQueryVariables = Exact<{
   uid: Scalars['String']
 }>
@@ -1599,6 +1957,49 @@ export const GetUserByCustomIdDocument = gql`
       instagram_id
       custom_id
       uid
+      id
+    }
+  }
+`
+export const UpsertPostWithArtistDocument = gql`
+  mutation UpsertPostWithArtist(
+    $title: String!
+    $message: String = ""
+    $location_name: String!
+    $location_lng: float8!
+    $location_lat: float8!
+    $link: String = ""
+    $uid: String!
+    $spotify_id: String!
+    $name: String!
+    $image_url: String!
+  ) {
+    insert_posts_one(
+      object: {
+        title: $title
+        message: $message
+        location_name: $location_name
+        location_lng: $location_lng
+        location_lat: $location_lat
+        link: $link
+        uid: $uid
+        artist: {
+          data: {
+            spotify_id: $spotify_id
+            name: $name
+            image_url: $image_url
+            favoriteArtists: {
+              data: { uid: $uid }
+              on_conflict: {
+                constraint: favoriteArtists_spotify_id_uid_key
+                update_columns: spotify_id
+              }
+            }
+          }
+          on_conflict: { constraint: artists_spotify_id_key, update_columns: image_url }
+        }
+      }
+    ) {
       id
     }
   }
@@ -1653,6 +2054,20 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
           }),
         'GetUserByCustomId',
         'query',
+      )
+    },
+    UpsertPostWithArtist(
+      variables: UpsertPostWithArtistMutationVariables,
+      requestHeaders?: Dom.RequestInit['headers'],
+    ): Promise<UpsertPostWithArtistMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<UpsertPostWithArtistMutation>(UpsertPostWithArtistDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'UpsertPostWithArtist',
+        'mutation',
       )
     },
     getUserByUid(

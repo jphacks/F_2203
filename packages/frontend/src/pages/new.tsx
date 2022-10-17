@@ -3,14 +3,19 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import toast, { Toaster } from 'react-hot-toast'
 import AsyncSelect from 'react-select/async'
 import { ActionMeta, SingleValue } from 'react-select/dist/declarations/src/types'
 import styles from '../styles/New.module.css'
 import { GetArtistsApiResponse } from './api/artists'
+import ConfettiModal from '@/components/ConfettiModal'
 import Loading from '@/components/Loading'
 import { SearchBox } from '@/components/SearchBox'
 import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
+import { useQueryUser } from '@/hooks/useUser'
 import fetcher from '@/lib/fetcher'
+import { createHasuraClient } from '@/lib/hasuraClient'
+import postUseCase from '@/useCases/postUseCase'
 
 type FormValues = {
   title: string
@@ -35,6 +40,11 @@ const New: NextPage = () => {
   const router = useRouter()
   const user = useAuthUser()
   const authInitialized = useAuthInitialized()
+  const hasuraClient = createHasuraClient(null)
+
+  const useCase = new postUseCase()
+
+  const { data: userData } = useQueryUser(user?.uid ?? '')
 
   useEffect(() => {
     if ((user === null || user.isAnonymous) && authInitialized) {
@@ -48,11 +58,47 @@ const New: NextPage = () => {
     register('location_lng', { required: true, min: -180, max: 180 })
   }, [register])
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data, artist)
+  const [artistId, setArtist] = useState<string | undefined>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [artistName, setArtistName] = useState('')
+  const [artistImage, setArtistImage] = useState('')
+
+  const closeModal = () => {
+    setIsModalOpen(false)
   }
 
-  const [artist, setArtist] = useState<string | undefined>()
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    toast.loading('ちょっと待ってね...✋🏻')
+    try {
+      setIsLoading(true)
+      const artist = await useCase.getArtistInfo(artistId ?? '')
+      await useCase.insertItem(
+        user?.uid as string,
+        data.title,
+        data.desc,
+        data.location_name,
+        data.location_lat,
+        data.location_lng,
+        data.link,
+        artist.id,
+        artist.name,
+        artist.images[2].url,
+      )
+
+      setArtistName(artist.name)
+      setArtistImage(artist.images[2].url)
+      toast.dismiss()
+      toast.success('履歴を追加しました!🎉')
+      setIsLoading(false)
+      setIsModalOpen(true)
+    } catch (e) {
+      toast.dismiss()
+      console.error(e)
+      toast.error('Something is wrong!🥺')
+      setIsLoading(false)
+    }
+  }
 
   const handleInputChange = (
     newValue: SingleValue<GetArtistsApiResponse>,
@@ -77,6 +123,15 @@ const New: NextPage = () => {
 
   return (
     <div className='bg-[#F0F5F9]'>
+      <Toaster />
+      <ConfettiModal
+        userName={userData?.user?.name ?? ''}
+        userCustmoId={userData?.user?.custom_id ?? ''}
+        artistImage={artistImage}
+        artistName={artistName}
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+      />
       <div className='my-auto min-h-screen justify-center items-center flex max-w-2xl mx-auto'>
         <div className='w-full mx-4'>
           <h2 className='text-xl mb-6 text-center'>新しい足跡を記録</h2>
@@ -169,7 +224,7 @@ const New: NextPage = () => {
                 {errors?.link && <p className='text-xs text-red-600'>{errors.link.message}</p>}
               </div>
               <div className='text-center'>
-                <button type='submit' className={styles.button}>
+                <button type='submit' className={styles.button} disabled={isLoading}>
                   <span>この内容で記録する</span>
                   <span>✨</span>
                 </button>

@@ -1,3 +1,18 @@
 table:
   schema: public
   name: artists
+array_relationships:
+  - name: favoriteArtists
+    using:
+      foreign_key_constraint_on:
+        column: spotify_id
+        table:
+          schema: public
+          name: favoriteArtists
+  - name: posts
+    using:
+      foreign_key_constraint_on:
+        column: spotify_id
+        table:
+          schema: public
+          name: posts
