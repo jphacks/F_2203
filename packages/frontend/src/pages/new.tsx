@@ -9,6 +9,7 @@ import { ActionMeta, SingleValue } from 'react-select/dist/declarations/src/type
 import styles from '../styles/New.module.css'
 import { GetArtistsApiResponse } from './api/artists'
 import { GetArtistApiResponse } from './api/artists/[ids]';
+import ConfettiModal from '@/components/ConfettiModal';
 import Loading from '@/components/Loading'
 import { SearchBox } from '@/components/SearchBox'
 import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
@@ -57,6 +58,13 @@ const New: NextPage = () => {
 
   const [artistId, setArtist] = useState<string | undefined>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [artistName, setArtistName] = useState("")
+  const [artistImage, setArtistImage] = useState("")
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     toast.loading('ちょっと待ってね...✋🏻');
@@ -77,11 +85,12 @@ const New: NextPage = () => {
         image_url: artist.images[2].url
       })
 
+      setArtistName(artist.name)
+      setArtistImage(artist.images[2].url)
       toast.dismiss();
       toast.success('履歴を追加しました!🎉');
       setIsLoading(false)
-      //完了したら/:idページへ遷移させる
-      router.push(`/${userData?.user?.custom_id}`)
+      setIsModalOpen(true)
     } catch (e) {
       toast.dismiss();
       console.error(e)
@@ -115,6 +124,7 @@ const New: NextPage = () => {
   return (
     <div className='bg-[#F0F5F9]'>
       <Toaster />
+      <ConfettiModal userName={userData?.user?.name ?? ""} userCustmoId={userData?.user?.custom_id ?? ""} artistImage={artistImage} artistName={artistName} isOpen={isModalOpen} closeModal={closeModal} />
       <div className='my-auto min-h-screen justify-center items-center flex max-w-2xl mx-auto'>
         <div className='w-full mx-4'>
           <h2 className='text-xl mb-6 text-center'>新しい足跡を記録</h2>

@@ -9,19 +9,12 @@ type IConfettiModal = {
   userCustmoId: string,
   artistName: string,
   artistImage: string,
+  isOpen: boolean
+  closeModal: () => void
 }
 
-const ConfettiModal: React.FC<IConfettiModal> = ({userName, userCustmoId, artistName, artistImage}) => {
-  const [isOpen, setIsOpen] = useState(true)
+const ConfettiModal: React.FC<IConfettiModal> = ({userName, userCustmoId, artistName, artistImage, isOpen, closeModal}) => {
   const { width, height } = useWindowSize()
-
-  function closeModal() {
-    setIsOpen(false)
-  }
-
-  function openModal() {
-    setIsOpen(true)
-  }
 
   let hostname = ``
   if (typeof window !== 'undefined') {
@@ -75,7 +68,7 @@ const ConfettiModal: React.FC<IConfettiModal> = ({userName, userCustmoId, artist
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-gray-500">
-                      {userName}さんと{artistName}さんとの初めての履歴が追加されました！！やったね！
+                      {userName}さんと{artistName}さんとの履歴が追加されました！！やったね！!
                     </p>
                   </div>
 
