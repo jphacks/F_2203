@@ -44,10 +44,17 @@ const SignUp: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError
   } = useForm<FormValues>()
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
+      //custom_id重複チェック
+      const customIds = await hasuraClient.GetUserByCustomId({ customId: data.name_id })
+      if (customIds.users.length == 0) {
+        setError("name_id", { message: "このユーザーIDは既に登録されています。" })
+        return
+      }
       //ユーザー登録
       await signUpUseCase.createUser(
         user?.uid as string,
@@ -162,7 +169,7 @@ const SignUp: NextPage = () => {
                   })}
                 />
               </div>
-              {errors?.name_id && <p className='text-xs text-blue-600'>{errors.name_id.message}</p>}
+              {errors?.name_id && <p className='text-xs text-red-600'>{errors.name_id.message}</p>}
               <div className='sub-text mb-6'>
                 半角英数字とアンダーバー（_）のみを使うことができます。
               </div>
