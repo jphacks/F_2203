@@ -21,7 +21,7 @@ const Login: FC = () => {
         const data = await hasuraClient.getUserByUid({ uid: uid })
         if (data.user != null) {
           //登録済みユーザーの場合
-          return router.push(`/${data.user?.custom_id}`)
+          return router.push(`/profile/${data.user?.custom_id}`)
         } else {
           router.push('/sign_up')
         }

@@ -33,7 +33,7 @@ const SignUp: NextPage = () => {
         const data = await hasuraClient.getUserByUid({ uid: uid })
         if (data.user != null) {
           //登録済みユーザーの場合
-          router.push(`/${data.user?.custom_id}`)
+          router.push(`/profile/${data.user?.custom_id}`)
         }
       }
     }
@@ -63,8 +63,8 @@ const SignUp: NextPage = () => {
         data.bio,
       )
       toast.success('ユーザー登録登録が完了しました!🎉')
-      //完了したら/:idページへ遷移させる
-      router.push(`/${data.name_id}`)
+      //完了したら/profile/:idページへ遷移させる
+      router.push(`/profile/${data.name_id}`)
     } catch (e) {
       toast.error(`ユーザー登録登録に失敗しました😥 もう一度試してみてください`)
     }
