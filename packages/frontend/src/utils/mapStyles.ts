@@ -1,45 +1,44 @@
-export const mapStyles: google.maps.MapTypeStyle[] =
-[
+export const mapStyles: google.maps.MapTypeStyle[] = [
   {
-      "featureType": "road",
-      "elementType": "geometry",
-      "stylers": [
-          {
-              "lightness": 100
-          },
-          {
-              "visibility": "simplified"
-          }
-      ]
+    featureType: 'road',
+    elementType: 'geometry',
+    stylers: [
+      {
+        lightness: 100,
+      },
+      {
+        visibility: 'simplified',
+      },
+    ],
   },
   {
-      "featureType": "water",
-      "elementType": "geometry",
-      "stylers": [
-          {
-              "visibility": "on"
-          },
-          {
-              "color": "#C6E2FF"
-          }
-      ]
+    featureType: 'water',
+    elementType: 'geometry',
+    stylers: [
+      {
+        visibility: 'on',
+      },
+      {
+        color: '#C6E2FF',
+      },
+    ],
   },
   {
-      "featureType": "poi",
-      "elementType": "geometry.fill",
-      "stylers": [
-          {
-              "color": "#C5E3BF"
-          }
-      ]
+    featureType: 'poi',
+    elementType: 'geometry.fill',
+    stylers: [
+      {
+        color: '#C5E3BF',
+      },
+    ],
   },
   {
-      "featureType": "road",
-      "elementType": "geometry.fill",
-      "stylers": [
-          {
-              "color": "#D1D1B8"
-          }
-      ]
-  }
+    featureType: 'road',
+    elementType: 'geometry.fill',
+    stylers: [
+      {
+        color: '#D1D1B8',
+      },
+    ],
+  },
 ]

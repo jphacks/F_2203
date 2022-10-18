@@ -1,8 +1,8 @@
 import { MarkerF, InfoWindowF } from '@react-google-maps/api'
 import React, { useMemo, useState } from 'react'
-import {type GetUserPostsByUidQuery } from '@/generated/graphql';
+import { type GetUserPostsByUidQuery } from '@/generated/graphql'
 
-type Post = GetUserPostsByUidQuery["posts"][0]
+type Post = GetUserPostsByUidQuery['posts'][0]
 
 interface IPlaceInfo {
   size?: google.maps.Size
@@ -27,36 +27,46 @@ const PlaceInfo: React.FC<IPlaceInfo> = ({ size, posts }) => {
 
     return (
       <MarkerF
-            key={p.id}
-            position={{
-              lat: lat,
-              lng: lng,
-            }}
-            onClick={() => {
-              setSelected({lat: lat,lng: lng, title: p.title ?? '', message:p.message ?? '', artistName: p.artist?.name ?? ''})
-              // <InfoWindow>が描画。
-            }}
-            onMouseOver={() => {
-              setSelected({lat: lat,lng: lng, title: p.title ?? '', message:p.message ?? '', artistName: p.artist?.name ?? ''})
-            }}
-            onMouseOut={() => {
-              setSelected(null)
-            }}
-            icon={{
-              url: '/images/musical.png',
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(50, 50),
-              // アイコン表示の設定。
-            }}
+        key={p.id}
+        position={{
+          lat: lat,
+          lng: lng,
+        }}
+        onClick={() => {
+          setSelected({
+            lat: lat,
+            lng: lng,
+            title: p.title ?? '',
+            message: p.message ?? '',
+            artistName: p.artist?.name ?? '',
+          })
+          // <InfoWindow>が描画。
+        }}
+        onMouseOver={() => {
+          setSelected({
+            lat: lat,
+            lng: lng,
+            title: p.title ?? '',
+            message: p.message ?? '',
+            artistName: p.artist?.name ?? '',
+          })
+        }}
+        onMouseOut={() => {
+          setSelected(null)
+        }}
+        icon={{
+          url: '/images/musical.png',
+          origin: new window.google.maps.Point(0, 0),
+          anchor: new window.google.maps.Point(15, 15),
+          scaledSize: new window.google.maps.Size(50, 50),
+          // アイコン表示の設定。
+        }}
       />
     )
   }
   return (
     <>
-      {posts.map((p) => (
-        Pin(p)
-      ))}
+      {posts.map((p) => Pin(p))}
       {selected && (
         <InfoWindowF
           // key={`${selected.location.position.lat * selected.location.position.lng} info`}

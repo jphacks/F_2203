@@ -18,12 +18,12 @@ const FavoriteArtists: React.FC<IFavoriteArtists> = ({ uid }) => {
 
   return (
     <section>
-      <h1 className='text-2xl font-bold pt-20 pb-0 text-center dark:text-white'>
+      {/* <h1 className='text-2xl font-bold pt-0 pb-0 text-center dark:text-white'>
         お気に入りアーティスト🎤
-      </h1>
+      </h1> */}
       <div className='-mt-4'>
         <div
-          className={`max-w-2xl mx-auto pt-10 flex flex-row overflow-x-scroll px-4 ${styles.mask}`}
+          className={`max-w-2xl mx-auto pt-5 flex flex-row overflow-x-scroll px-4 ${styles.mask}`}
         >
           {artists?.map((ats, idx) => (
             <Card

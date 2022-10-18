@@ -1,7 +1,7 @@
 import { GoogleMap, LoadScriptNext } from '@react-google-maps/api'
 import React, { useCallback, useRef, useState } from 'react'
 import PlaceInfo from './PlaceInfo'
-import { GetUserPostsByUidQuery } from '@/generated/graphql';
+import { GetUserPostsByUidQuery } from '@/generated/graphql'
 import { mapStyles } from '@/utils/mapStyles'
 // 地図のデザインは https://snazzymaps.com からインポートできる。
 
@@ -24,10 +24,10 @@ const options: google.maps.MapOptions = {
 }
 
 type IMap = {
-  posts: GetUserPostsByUidQuery["posts"]
+  posts: GetUserPostsByUidQuery['posts']
 }
 
-const Map: React.FC<IMap> = ({posts}) => {
+const Map: React.FC<IMap> = ({ posts }) => {
   const [size, setSize] = useState<undefined | google.maps.Size>(undefined)
 
   const center = {
@@ -41,9 +41,7 @@ const Map: React.FC<IMap> = ({posts}) => {
   //API読み込み後に再レンダーを引き起こさないため、useStateを使わず、useRefとuseCallbackを使用。
   return (
     <div>
-      <h1 className='text-2xl font-bold pt-20 pb-5 text-center dark:text-white'>
-        足あと📍
-      </h1>
+      {/* <h1 className='text-2xl font-bold pt-20 pb-5 text-center dark:text-white'>足あと📍</h1> */}
       <LoadScriptNext googleMapsApiKey={key} onLoad={createOffsetSize}>
         <GoogleMap
           id='map'

@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 import styles from '../styles/SignUp.module.css'
 import { useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
-import { signUpUseCase } from '@/useCases';
+import { signUpUseCase } from '@/useCases'
 
 type FormValues = {
   name: string
@@ -44,7 +44,7 @@ const SignUp: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setError
+    setError,
   } = useForm<FormValues>()
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
@@ -52,16 +52,11 @@ const SignUp: NextPage = () => {
       //custom_id重複チェック
       const customIds = await hasuraClient.GetUserByCustomId({ customId: data.name_id })
       if (customIds.users.length > 0) {
-        setError("name_id", { message: "このユーザーIDは既に登録されています。" })
+        setError('name_id', { message: 'このユーザーIDは既に登録されています。' })
         return
       }
       //ユーザー登録
-      await signUpUseCase.createUser(
-        user?.uid as string,
-        data.name,
-        data.name_id,
-        data.bio,
-      )
+      await signUpUseCase.createUser(user?.uid as string, data.name, data.name_id, data.bio)
       toast.success('ユーザー登録登録が完了しました!🎉')
       //完了したら/profile/:idページへ遷移させる
       router.push(`/profile/${data.name_id}`)
