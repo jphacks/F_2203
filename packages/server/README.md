@@ -18,8 +18,13 @@ docker-compose up --build
 2. hasura 起動
 
 ```bash
-cd hasura
 npx hasura console --envfile .env.dev
+```
+
+3. 2が失敗した場合
+```bash
+yarn
+hasura console --envfile .env.dev
 ```
 
 
