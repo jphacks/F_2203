@@ -19,8 +19,8 @@ export default class AuthUseCase {
       })
       .catch((error) => {
         const errorCode = error.code
-        console.log(error)
-        alert(errorCode)
+        console.log(errorCode)
+        throw error
       })
   }
   // ログイン状態の検知
