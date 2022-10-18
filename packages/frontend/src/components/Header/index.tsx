@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { auth } from '@/lib/firebase'
 
-const Header = () => {
+const Header: React.FC = () => {
   const isLoggedIn = auth.currentUser != null
 
   return (
@@ -54,4 +54,4 @@ const Header = () => {
   )
 }
 
-export default React.memo(Header)
+export default Header
