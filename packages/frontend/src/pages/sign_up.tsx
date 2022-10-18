@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { ChangeEvent, useEffect, useReducer, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import styles from '../styles/SignUp.module.css'
@@ -51,7 +51,7 @@ const SignUp: NextPage = () => {
     try {
       //custom_id重複チェック
       const customIds = await hasuraClient.GetUserByCustomId({ customId: data.name_id })
-      if (customIds.users.length == 0) {
+      if (customIds.users.length > 0) {
         setError("name_id", { message: "このユーザーIDは既に登録されています。" })
         return
       }
