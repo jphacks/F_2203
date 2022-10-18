@@ -3,7 +3,9 @@ import React, { useEffect, useState } from 'react'
 import FavoriteArtists from '@/components/FavoriteArtists'
 import { Layout } from '@/components/Layout'
 import Loading from '@/components/Loading'
+import Map from '@/components/Map/Map';
 import NoContent from '@/components/NoContent'
+import Spacer from '@/components/Space';
 import { GetUserByCustomIdQuery } from '@/generated/graphql'
 import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
 import { useQueryUserPosts } from '@/hooks/useUser'
@@ -42,14 +44,19 @@ const Profile: NextPageWithLayout<Props> = ({ user }) => {
         </div>
       </div>
       <div className='my-auto justify-center items-center flex max-w-2xl mx-auto'>
-        {postsData?.posts.length == 0 ? (
+        { !postsData?.posts || postsData?.posts.length == 0 ? (
           <NoContent isMine={isMine} />
         ) : (
-          <div>
-            <FavoriteArtists uid={user.uid} />
+            <div className='min-w-full'>
+              <h1 className='text-5xl font-bold pt-5 pb-0 text-center dark:text-white'>
+                履歴書
+              </h1>
+              <FavoriteArtists uid={user.uid} />
+              <Map posts={postsData?.posts}/>
           </div>
         )}
       </div>
+      <Spacer size={40}/>
     </div>
   )
 }

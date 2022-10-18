@@ -18,8 +18,8 @@ const FavoriteArtists: React.FC<IFavoriteArtists> = ({ uid }) => {
 
   return (
     <section>
-      <h1 className='text-4xl font-bold pt-20 pb-0 text-center dark:text-white'>
-        Favorite Artists
+      <h1 className='text-2xl font-bold pt-20 pb-0 text-center dark:text-white'>
+        お気に入りアーティスト🎤
       </h1>
       <div className='-mt-4'>
         <div
