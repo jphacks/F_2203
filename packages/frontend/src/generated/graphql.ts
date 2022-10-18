@@ -1939,7 +1939,7 @@ export type GetUserPostsByUidQueryVariables = Exact<{
 }>;
 
 
-export type GetUserPostsByUidQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', title?: string | null, message?: string | null, location_name?: string | null, location_lng?: any | null, location_lat?: any | null, link?: string | null, id: number }> };
+export type GetUserPostsByUidQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', title?: string | null, message?: string | null, location_name?: string | null, location_lng?: any | null, location_lat?: any | null, link?: string | null, id: number, artist?: { __typename?: 'artists', name?: string | null } | null }> };
 
 export type UpsertPostWithArtistMutationVariables = Exact<{
   title: Scalars['String'];
@@ -2015,6 +2015,9 @@ export const GetUserPostsByUidDocument = gql`
     location_lat
     link
     id
+    artist {
+      name
+    }
   }
 }
     `;
