@@ -1,9 +1,15 @@
 import Link from 'next/link'
-import React from 'react'
-import { auth } from '@/lib/firebase'
+import React, { useEffect, useState } from 'react'
+import { useAuthUser } from '@/hooks/useAuth'
 
-const Header = () => {
-  const isLoggedIn = auth.currentUser != null
+const Header: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const authUser = useAuthUser()
+  useEffect(() => {
+    if (authUser?.uid) {
+      setIsLoggedIn(true)
+    }
+  }, [authUser])
 
   return (
     <div className='navbar bg-white'>
@@ -54,4 +60,4 @@ const Header = () => {
   )
 }
 
-export default React.memo(Header)
+export default Header

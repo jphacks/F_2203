@@ -6,14 +6,14 @@ import { AuthProvider } from '@/context/authContext'
 const queryClient = new QueryClient()
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page) => page)
+  const getLayout = Component.getLayout || ((page) => page)
 
-  return getLayout(
+  return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
       </AuthProvider>
-    </QueryClientProvider>,
+    </QueryClientProvider>
   )
 }
 
