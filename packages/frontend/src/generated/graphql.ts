@@ -1871,6 +1871,23 @@ export type CreateUserMutation = {
   } | null
 }
 
+export type GetFavoriteArtistsByUidQueryVariables = Exact<{
+  uid: Scalars['String']
+}>
+
+export type GetFavoriteArtistsByUidQuery = {
+  __typename?: 'query_root'
+  artists: Array<{
+    __typename?: 'favoriteArtists'
+    artist?: {
+      __typename?: 'artists'
+      spotify_id: string
+      name?: string | null
+      image_url?: string | null
+    } | null
+  }>
+}
+
 export type GetUserByCustomIdQueryVariables = Exact<{
   customId: Scalars['String']
 }>
@@ -1887,6 +1904,25 @@ export type GetUserByCustomIdQuery = {
     custom_id?: string | null
     uid: string
     id: number
+  }>
+}
+
+export type GetUserPostsByUidQueryVariables = Exact<{
+  uid: Scalars['String']
+}>
+
+export type GetUserPostsByUidQuery = {
+  __typename?: 'query_root'
+  posts: Array<{
+    __typename?: 'posts'
+    title?: string | null
+    message?: string | null
+    location_name?: string | null
+    location_lng?: any | null
+    location_lat?: any | null
+    link?: string | null
+    id: number
+    artist?: { __typename?: 'artists'; name?: string | null } | null
   }>
 }
 
@@ -1947,6 +1983,17 @@ export const CreateUserDocument = gql`
     }
   }
 `
+export const GetFavoriteArtistsByUidDocument = gql`
+  query GetFavoriteArtistsByUid($uid: String!) {
+    artists: favoriteArtists(where: { uid: { _eq: $uid } }) {
+      artist {
+        spotify_id
+        name
+        image_url
+      }
+    }
+  }
+`
 export const GetUserByCustomIdDocument = gql`
   query GetUserByCustomId($customId: String!) {
     users(where: { custom_id: { _eq: $customId } }) {
@@ -1958,6 +2005,22 @@ export const GetUserByCustomIdDocument = gql`
       custom_id
       uid
       id
+    }
+  }
+`
+export const GetUserPostsByUidDocument = gql`
+  query GetUserPostsByUid($uid: String!) {
+    posts(where: { uid: { _eq: $uid } }) {
+      title
+      message
+      location_name
+      location_lng
+      location_lat
+      link
+      id
+      artist {
+        name
+      }
     }
   }
 `
@@ -2042,6 +2105,20 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
         'mutation',
       )
     },
+    GetFavoriteArtistsByUid(
+      variables: GetFavoriteArtistsByUidQueryVariables,
+      requestHeaders?: Dom.RequestInit['headers'],
+    ): Promise<GetFavoriteArtistsByUidQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetFavoriteArtistsByUidQuery>(GetFavoriteArtistsByUidDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'GetFavoriteArtistsByUid',
+        'query',
+      )
+    },
     GetUserByCustomId(
       variables: GetUserByCustomIdQueryVariables,
       requestHeaders?: Dom.RequestInit['headers'],
@@ -2053,6 +2130,20 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             ...wrappedRequestHeaders,
           }),
         'GetUserByCustomId',
+        'query',
+      )
+    },
+    GetUserPostsByUid(
+      variables: GetUserPostsByUidQueryVariables,
+      requestHeaders?: Dom.RequestInit['headers'],
+    ): Promise<GetUserPostsByUidQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetUserPostsByUidQuery>(GetUserPostsByUidDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'GetUserPostsByUid',
         'query',
       )
     },

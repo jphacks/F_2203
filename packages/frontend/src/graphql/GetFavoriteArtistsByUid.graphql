@@ -1,0 +1,9 @@
+query GetFavoriteArtistsByUid($uid: String!) {
+  artists: favoriteArtists(where: { uid: { _eq: $uid } }) {
+    artist {
+      spotify_id
+      name
+      image_url
+    }
+  }
+}

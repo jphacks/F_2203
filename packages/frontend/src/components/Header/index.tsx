@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <div className='navbar bg-white'>
       <div className='flex-1'>
-        <a className='btn btn-ghost normal-case text-xl text-gray-800'>HogeHoge</a>
+        <a className='btn btn-ghost normal-case text-xl text-gray-800'>オタクの履歴書</a>
       </div>
       {isLoggedIn ? (
         <div className='flex-none'>
