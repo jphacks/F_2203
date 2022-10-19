@@ -1,4 +1,4 @@
-import { createHasuraClient, HasuraClient } from "@/lib/hasuraClient";
+import { createHasuraClient, HasuraClient } from '@/lib/hasuraClient'
 
 export default class SignUpUseCase {
   hasuraClient: HasuraClient

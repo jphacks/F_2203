@@ -1,9 +1,9 @@
-import { linkWithPopup } from 'firebase/auth'
 import { useRouter } from 'next/router'
-import React, { FC, useEffect, useReducer } from 'react'
+import React, { FC, useEffect, useReducer, useState } from 'react'
+import toast from 'react-hot-toast';
 import styles from '../styles/Login.module.css'
+import Loading from '@/components/Loading';
 import { useAuthUser } from '@/hooks/useAuth'
-import { auth, googleProvider } from '@/lib/firebase'
 import { createHasuraClient } from '@/lib/hasuraClient'
 import authReducer from '@/reducers/authReducer'
 import { authUseCase } from '@/useCases'
@@ -13,6 +13,7 @@ const Login: FC = () => {
   const [, dispatch] = useReducer(authReducer.reducer, authReducer.initialState)
   const user = useAuthUser()
   const hasuraClient = createHasuraClient(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const data = async () => {
@@ -21,7 +22,7 @@ const Login: FC = () => {
         const data = await hasuraClient.getUserByUid({ uid: uid })
         if (data.user != null) {
           //登録済みユーザーの場合
-          return router.push(`/${data.user?.custom_id}`)
+          return router.push(`/profile/${data.user?.custom_id}`)
         } else {
           router.push('/sign_up')
         }
@@ -32,13 +33,19 @@ const Login: FC = () => {
 
   const logIn = async () => {
     try {
+      setIsLoading(true)
       await authUseCase.signInWithGoogle(dispatch)
       return router.push('/sign_up')
     } catch (err) {
+      setIsLoading(false)
+      toast.error(`ログインに失敗しました😥 時間を空けてもう一度試してみてください`)
       console.log(err)
     }
   }
 
+  if (isLoading) {
+    return <Loading />
+  }
   return (
     <main
       className={`mx-auto my-auto min-h-screen justify-center flex items-center ${styles.container}`}

@@ -1,13 +1,13 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { ChangeEvent, useEffect, useReducer, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import styles from '../styles/SignUp.module.css'
 import { useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
-import { signUpUseCase } from '@/useCases';
+import { signUpUseCase } from '@/useCases'
 
 type FormValues = {
   name: string
@@ -19,6 +19,7 @@ type FormValues = {
 const SignUp: NextPage = () => {
   const [preview, setPreview] = useState('')
   const [fileName, setFileName] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const router = useRouter()
   const user = useAuthUser()
@@ -33,7 +34,7 @@ const SignUp: NextPage = () => {
         const data = await hasuraClient.getUserByUid({ uid: uid })
         if (data.user != null) {
           //登録済みユーザーの場合
-          router.push(`/${data.user?.custom_id}`)
+          router.push(`/profile/${data.user?.custom_id}`)
         }
       }
     }
@@ -44,21 +45,31 @@ const SignUp: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<FormValues>()
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
+      setIsLoading(true)
+      toast.loading('処理中...ちょっと待ってね...✋🏻')
+      //custom_id重複チェック
+      const customIds = await hasuraClient.GetUserByCustomId({ customId: data.name_id })
+      if (customIds.users.length > 0) {
+        setError('name_id', { message: 'このユーザーIDは既に登録されています。' })
+        toast.dismiss()
+        setIsLoading(false)
+        return
+      }
       //ユーザー登録
-      await signUpUseCase.createUser(
-        user?.uid as string,
-        data.name,
-        data.name_id,
-        data.bio,
-      )
+      await signUpUseCase.createUser(user?.uid as string, data.name, data.name_id, data.bio)
+      toast.dismiss()
+      setIsLoading(false)
       toast.success('ユーザー登録登録が完了しました!🎉')
-      //完了したら/:idページへ遷移させる
-      router.push(`/${data.name_id}`)
+      //完了したら/profile/:idページへ遷移させる
+      router.push(`/profile/${data.name_id}`)
     } catch (e) {
+      toast.dismiss()
+      setIsLoading(false)
       toast.error(`ユーザー登録登録に失敗しました😥 もう一度試してみてください`)
     }
   }
@@ -162,7 +173,7 @@ const SignUp: NextPage = () => {
                   })}
                 />
               </div>
-              {errors?.name_id && <p className='text-xs text-blue-600'>{errors.name_id.message}</p>}
+              {errors?.name_id && <p className='text-xs text-red-600'>{errors.name_id.message}</p>}
               <div className='sub-text mb-6'>
                 半角英数字とアンダーバー（_）のみを使うことができます。
               </div>
@@ -180,6 +191,7 @@ const SignUp: NextPage = () => {
                   type='submit'
                   className='text-white hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-600 font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center'
                   style={{ backgroundColor: '#0162b9' }}
+                  disabled={isLoading}
                 >
                   はじめる
                 </button>
