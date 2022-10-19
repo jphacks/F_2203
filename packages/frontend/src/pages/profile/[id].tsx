@@ -9,7 +9,7 @@ import NoContent from '@/components/NoContent'
 import Spacer from '@/components/Space'
 import Timeline from '@/components/Timeline'
 import { GetUserByCustomIdQuery } from '@/generated/graphql'
-import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
+import { useAuthUser } from '@/hooks/useAuth'
 import { useQueryUserPosts } from '@/hooks/useUser'
 import { createHasuraClient } from '@/lib/hasuraClient'
 
@@ -20,7 +20,6 @@ type Props = {
 const Resume: NextPageWithLayout<Props> = ({ user }) => {
   const [isMine, setIsMine] = useState<boolean>(false)
   const authUser = useAuthUser()
-  const authInitialized = useAuthInitialized()
   const { data: postsData, isLoading } = useQueryUserPosts(user.uid)
 
   useEffect(() => {
@@ -28,10 +27,6 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
       setIsMine(true)
     }
   }, [authUser?.uid, user.uid])
-
-  if (!authInitialized) {
-    return <Loading />
-  }
 
   return (
     <div className='bg_main-color min-h-screen'>

@@ -11,7 +11,7 @@ import { GetArtistsApiResponse } from './api/artists'
 import ConfettiModal from '@/components/ConfettiModal'
 import Loading from '@/components/Loading'
 import { SearchBox } from '@/components/SearchBox'
-import { useAuthInitialized, useAuthUser } from '@/hooks/useAuth'
+import { useAuthUser } from '@/hooks/useAuth'
 import { useQueryUser } from '@/hooks/useUser'
 import fetcher from '@/lib/fetcher'
 import { createHasuraClient } from '@/lib/hasuraClient'
@@ -39,7 +39,6 @@ const New: NextPage = () => {
 
   const router = useRouter()
   const user = useAuthUser()
-  const authInitialized = useAuthInitialized()
   const hasuraClient = createHasuraClient(null)
 
   const useCase = new postUseCase()
@@ -47,7 +46,7 @@ const New: NextPage = () => {
   const { data: userData } = useQueryUser(user?.uid ?? '')
 
   useEffect(() => {
-    if ((user === null || user.isAnonymous) && authInitialized) {
+    if ((user === null || user.isAnonymous)) {
       router.push('/login')
     }
   }, [user, router])
@@ -115,10 +114,6 @@ const New: NextPage = () => {
     return fetcher(`/api/artists?keyword=${input}`).then((res) => {
       return res?.artists ?? []
     })
-  }
-
-  if (!authInitialized) {
-    return <Loading />
   }
 
   return (

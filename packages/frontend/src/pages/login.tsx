@@ -17,6 +17,7 @@ const Login: FC = () => {
 
   useEffect(() => {
     const data = async () => {
+      setIsLoading(true)
       if (user != null && !user.isAnonymous) {
         const uid = user?.uid
         const data = await hasuraClient.getUserByUid({ uid: uid })
@@ -24,9 +25,10 @@ const Login: FC = () => {
           //登録済みユーザーの場合
           return router.push(`/profile/${data.user?.custom_id}`)
         } else {
-          router.push('/sign_up')
+          return router.push('/sign_up')
         }
       }
+      setIsLoading(false)
     }
     data()
   }, [user, router])

@@ -67,7 +67,7 @@ function ReadySearchBox({ onSelectAddress, defaultValue }: ISearchBoxProps) {
           className='bg-gray-50 border border-gray-300 text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-500 block w-full p-2.5'
           autoComplete='off'
         />
-        <Combobox.Options className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+        <Combobox.Options className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10'>
           {status !== 'ZERO_RESULTS' && status !== 'OK' && (
             <div className='relative cursor-default select-none py-2 px-4 text-gray-700'>
               Loading...

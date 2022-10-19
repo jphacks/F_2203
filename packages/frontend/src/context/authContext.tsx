@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { auth } from '../lib/firebase'
+import Loading from '@/components/Loading';
 
 type Auth =
   | {
@@ -49,5 +50,11 @@ export const AuthProvider: React.VFC<AuthProviderProps> = ({ children }) => {
     })
   }, [])
 
-  return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>
+  if (user.initialized) {
+    return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>
+  } else {
+    // ログイン確認中
+    return <Loading />
+  }
+
 }
