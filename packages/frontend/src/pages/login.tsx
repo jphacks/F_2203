@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import React, { FC, useEffect, useReducer, useState } from 'react'
-import toast from 'react-hot-toast';
+import toast from 'react-hot-toast'
 import styles from '../styles/Login.module.css'
-import Loading from '@/components/Loading';
+import Loading from '@/components/Loading'
 import { useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
 import authReducer from '@/reducers/authReducer'

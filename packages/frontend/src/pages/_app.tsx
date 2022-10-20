@@ -10,9 +10,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        {getLayout(<Component {...pageProps} />)}
-      </AuthProvider>
+      <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
     </QueryClientProvider>
   )
 }

@@ -29,7 +29,7 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
   }, [authUser?.uid, user.uid])
 
   if (isLoading) {
-    return <Loading/>
+    return <Loading />
   }
 
   return (

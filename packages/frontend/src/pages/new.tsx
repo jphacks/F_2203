@@ -46,7 +46,7 @@ const New: NextPage = () => {
   const { data: userData } = useQueryUser(user?.uid ?? '')
 
   useEffect(() => {
-    if ((user === null || user.isAnonymous)) {
+    if (user === null || user.isAnonymous) {
       router.push('/login')
     }
   }, [user, router])

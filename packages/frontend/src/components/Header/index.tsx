@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuthUser } from '@/hooks/useAuth'
 
 const Header: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const authUser = useAuthUser()
   useEffect(() => {
     if (authUser?.uid) {
