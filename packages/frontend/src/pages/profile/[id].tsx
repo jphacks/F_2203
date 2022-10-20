@@ -28,6 +28,10 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
     }
   }, [authUser?.uid, user.uid])
 
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <div className='bg_main-color min-h-screen'>
       <div className='my-auto justify-center items-center max-w-5xl mx-auto'>
