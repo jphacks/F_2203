@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { Dispatch } from 'react'
-import toast from 'react-hot-toast';
+import toast from 'react-hot-toast'
 import { auth } from '../lib/firebase'
 import { Action } from '@/reducers/authReducer'
 
