@@ -121,7 +121,7 @@ const SignUp: NextPage = () => {
           <h2 className='text-3xl mb-6 text-center'>新規作成</h2>
           <div className='px-12 py-10 bg-white rounded border-t-4'>
             <form onSubmit={handleSubmit(onSubmit)}>
-              {/* <label htmlFor='avatarImg'>
+              <label htmlFor='avatarImg'>
                 <div className='text-center'>
                   <div className='avatar cursor-pointer'>
                     <div className='w-24 rounded'>
@@ -140,7 +140,7 @@ const SignUp: NextPage = () => {
                   />
                   <p>{preview ? fileName : 'アイコンを変更する'}</p>
                 </div>
-              </label> */}
+              </label>
               <div className='mb-6 items-center'>
                 <input
                   id='name'
