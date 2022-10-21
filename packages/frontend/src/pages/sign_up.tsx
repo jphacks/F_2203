@@ -8,6 +8,8 @@ import styles from '../styles/SignUp.module.css'
 import { useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
 import { signUpUseCase } from '@/useCases'
+import { getProfileImagePath, uploadFile } from '@/utils/uploadFile'
+import loadImage from 'blueimp-load-image'
 
 type FormValues = {
   name: string
@@ -34,7 +36,7 @@ const SignUp: NextPage = () => {
         const data = await hasuraClient.getUserByUid({ uid: uid })
         if (data.user != null) {
           //登録済みユーザーの場合
-          router.push(`/profile/${data.user?.custom_id}`)
+          // router.push(`/profile/${data.user?.custom_id}`)
         }
       }
     }
@@ -76,6 +78,21 @@ const SignUp: NextPage = () => {
 
   // Upload image function
   const uploadImage = async (file: File) => {
+    if (!user?.uid) return;
+    console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
+
+    const canvas = await loadImage(file, {
+      maxWidth: 500,
+      canvas: true
+    })
+    console.log('圧縮ご：', canvas)
+    //@ts-ignore
+    canvas.image.toBlob(async (blob) => {
+      console.log(blob.size / 1024 / 1024 + "MB")
+      const result = await uploadFile(getProfileImagePath(user.uid), blob)
+      console.log(result)
+    })
+
     // toast.promise(, {
     //     loading: 'Uploading...',
     //     success: '画像のアップロードに成功しました!🎉',
@@ -96,6 +113,7 @@ const SignUp: NextPage = () => {
 
     setPreview(window.URL.createObjectURL(file))
     setFileName(file.name)
+    uploadImage(file)
   }
 
   return (
