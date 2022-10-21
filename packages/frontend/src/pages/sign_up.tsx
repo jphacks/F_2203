@@ -1,3 +1,4 @@
+import loadImage from 'blueimp-load-image'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -8,6 +9,7 @@ import styles from '../styles/SignUp.module.css'
 import { useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
 import { signUpUseCase } from '@/useCases'
+import { getProfileImagePath, uploadFile } from '@/utils/uploadFile'
 
 type FormValues = {
   name: string
@@ -60,11 +62,14 @@ const SignUp: NextPage = () => {
         setIsLoading(false)
         return
       }
+      //画像アップロード
+      const url = await uploadImage()
+
       //ユーザー登録
-      await signUpUseCase.createUser(user?.uid as string, data.name, data.name_id, data.bio)
+      await signUpUseCase.createUser(user?.uid as string, data.name, data.name_id, data.bio, url)
       toast.dismiss()
       setIsLoading(false)
-      toast.success('ユーザー登録登録が完了しました!🎉')
+      toast.success('ユーザー登録登録が完了しました!🎉数秒後ページ遷移します')
       //完了したら/profile/:idページへ遷移させる
       router.push(`/profile/${data.name_id}`)
     } catch (e) {
@@ -75,7 +80,17 @@ const SignUp: NextPage = () => {
   }
 
   // Upload image function
-  const uploadImage = async (file: File) => {
+  const uploadImage = async () => {
+    if (!user?.uid || preview.length === 0) return "";
+    const canvas = await loadImage(preview, {
+      maxWidth: 500,
+      canvas: true
+    })
+
+    //@ts-ignore
+    const blob = await new Promise(resolve => canvas.image.toBlob(resolve)) as Blob;
+    const result = await uploadFile(getProfileImagePath(user.uid), blob)
+    return result
     // toast.promise(, {
     //     loading: 'Uploading...',
     //     success: '画像のアップロードに成功しました!🎉',
@@ -106,7 +121,7 @@ const SignUp: NextPage = () => {
           <h2 className='text-3xl mb-6 text-center'>新規作成</h2>
           <div className='px-12 py-10 bg-white rounded border-t-4'>
             <form onSubmit={handleSubmit(onSubmit)}>
-              {/* <label htmlFor='avatarImg'>
+              <label htmlFor='avatarImg'>
                 <div className='text-center'>
                   <div className='avatar cursor-pointer'>
                     <div className='w-24 rounded'>
@@ -125,7 +140,7 @@ const SignUp: NextPage = () => {
                   />
                   <p>{preview ? fileName : 'アイコンを変更する'}</p>
                 </div>
-              </label> */}
+              </label>
               <div className='mb-6 items-center'>
                 <input
                   id='name'
