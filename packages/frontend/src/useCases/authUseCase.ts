@@ -12,7 +12,6 @@ export default class AuthUseCase {
     signInWithPopup(auth, provider)
       .then((result) => {
         toast.dismiss()
-        toast.loading('おっ！')
         const user = result.user
         dispatch({
           type: 'login',
