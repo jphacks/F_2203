@@ -1,6 +1,6 @@
 # オタクの履歴書
 
-[![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2022/08/JPHACKS2022_ogp.jpg)](https://www.youtube.com/watch?v=LUPQFB4QyVo)
+![オタクの履歴書](https://user-images.githubusercontent.com/53213591/197217543-62292366-f905-4b88-b64a-9ba75385324b.png)
 
 ## 製品概要
 ### 背景(製品開発のきっかけ、課題等）
