@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import styles from '../styles/SignUp.module.css'
 import { useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
@@ -100,6 +100,7 @@ const SignUp: NextPage = () => {
 
   return (
     <div className={styles.container}>
+      <Toaster />
       <main className='mx-auto my-auto min-h-screen justify-center items-center flex'>
         <div>
           <h2 className='text-3xl mb-6 text-center'>新規作成</h2>
