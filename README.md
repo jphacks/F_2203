@@ -1,4 +1,4 @@
-# サンプル（プロダクト名）
+# オタクの履歴書
 
 [![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2022/08/JPHACKS2022_ogp.jpg)](https://www.youtube.com/watch?v=LUPQFB4QyVo)
 
@@ -30,9 +30,8 @@
 * フロント： TypeScript / React / Next.js / Tailwind.css / GraphQL Code Generator
 * バックエンド： hasura / PostgreSQL 
 * その他： Github Actions / Firebase (auth, storage) / Vercel / 
-#### デバイス
-* 
-* 
+
+<img src="https://user-images.githubusercontent.com/53213591/197212562-ad7ccc77-f6e4-4b2e-9b16-1f5c70f659fd.png" width="600"/>
 
 ### 独自技術
 #### ハッカソンで開発した独自機能・技術
