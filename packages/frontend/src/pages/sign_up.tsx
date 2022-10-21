@@ -69,7 +69,7 @@ const SignUp: NextPage = () => {
       await signUpUseCase.createUser(user?.uid as string, data.name, data.name_id, data.bio, url)
       toast.dismiss()
       setIsLoading(false)
-      toast.success('ユーザー登録登録が完了しました!🎉')
+      toast.success('ユーザー登録登録が完了しました!🎉数秒後ページ遷移します')
       //完了したら/profile/:idページへ遷移させる
       router.push(`/profile/${data.name_id}`)
     } catch (e) {
