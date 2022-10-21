@@ -2,19 +2,16 @@ import React from 'react'
 import Card from '../Card'
 import Loading from '../Loading'
 import styles from './style.module.css'
+import { Artists, type GetFavoriteArtistsByUidQuery } from '@/generated/graphql';
 import { useQueryFavoriteArtists } from '@/hooks/useUser'
 
 type IFavoriteArtists = {
   uid: string
+  favoriteArtists: GetFavoriteArtistsByUidQuery["artists"]
 }
 
-const FavoriteArtists: React.FC<IFavoriteArtists> = ({ uid }) => {
-  const { data, isLoading } = useQueryFavoriteArtists(uid)
-  const artists = data?.artists
-
-  if (isLoading) {
-    return <Loading />
-  }
+const FavoriteArtists: React.FC<IFavoriteArtists> = ({ uid, favoriteArtists }) => {
+  const artists = favoriteArtists
 
   return (
     <section>
