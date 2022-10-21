@@ -7,12 +7,13 @@ export default class SignUpUseCase {
   }
 
   /** ユーザー情報登録 */
-  async createUser(uid: string, name: string, nameId: string, bio: string) {
+  async createUser(uid: string, name: string, nameId: string, bio: string, url: string) {
     await this.hasuraClient.CreateUser({
       uid: uid,
       name: name,
       custom_id: nameId,
       bio: bio,
+      avatar_url: url
     })
   }
 }

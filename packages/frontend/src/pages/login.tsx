@@ -31,7 +31,7 @@ const Login: FC = () => {
       setIsLoading(false)
     }
     data()
-  }, [user, router])
+  }, [user, router, hasuraClient])
 
   const logIn = async () => {
     try {
