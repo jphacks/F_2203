@@ -10,7 +10,7 @@ import Spacer from '@/components/Space'
 import Timeline from '@/components/Timeline'
 import { GetUserByCustomIdQuery } from '@/generated/graphql'
 import { useAuthUser } from '@/hooks/useAuth'
-import { useQueryUserPosts } from '@/hooks/useUser'
+import { useQueryFavoriteArtists, useQueryUserPosts } from '@/hooks/useUser'
 import { createHasuraClient } from '@/lib/hasuraClient'
 
 type Props = {
@@ -21,6 +21,7 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
   const [isMine, setIsMine] = useState<boolean>(false)
   const authUser = useAuthUser()
   const { data: postsData, isLoading } = useQueryUserPosts(user.uid)
+  const { data: favoriteArtistsData } = useQueryFavoriteArtists(user.uid)
 
   useEffect(() => {
     if (authUser?.uid === user.uid) {
@@ -31,6 +32,8 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
   if (isLoading) {
     return <Loading />
   }
+
+  const point = (postsData?.posts.length ?? 0) + (favoriteArtistsData?.artists.length ?? 0)
 
   return (
     <div className='bg_main-color min-h-screen'>
@@ -68,14 +71,15 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
               <div className='card bg-base-100 shadow-xl'>
                 <Confetti numberOfPieces={150} gravity={0.05} recycle={false} />
                 <div className='card-body'>
-                  <h2 className='card-title'>GPA</h2>
-                  <p className='text-blue-500 text-6xl text-center'>{postsData.posts.length}</p>
-                  <p className='text-center'>⭐️⭐️⭐️⭐️</p>
+                  <h2 className='card-title'>貢献度ポイント</h2>
+                  <p className='text-blue-500 text-6xl text-center'>{point}</p>
+                  <p className='text-center'>⭐️⭐️⭐️</p>
                 </div>
               </div>
               <div className='card bg-base-100 shadow-xl'>
                 <div className='card-body'>
-                  <h2 className='card-title'>アーティスト別 投稿数</h2>
+                    <h2 className='card-title'>アーティスト別 投稿数</h2>
+                    <p className='text-blue-500 text-xl text-center'>開発中..</p>
                 </div>
               </div>
               <div className='card col-span-2 bg-base-100 shadow-xl'>

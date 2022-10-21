@@ -65,6 +65,9 @@ const New: NextPage = () => {
 
   const closeModal = () => {
     setIsModalOpen(false)
+    if (userData?.user?.custom_id) {
+      router.push(`/profile/${userData?.user?.custom_id}`)
+    }
   }
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
