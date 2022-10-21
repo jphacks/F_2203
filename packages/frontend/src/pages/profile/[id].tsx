@@ -58,7 +58,7 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
                     <Spacer size={10} />
                     <h2 className='card-title w-full mx-2 justify-center'>{user.name}</h2>
                   </div>
-                  <p>{user.bio}aaaaa</p>
+                  <p>{user.bio}</p>
                 </div>
               </div>
               <div className='card bg-base-100 shadow-xl'>
