@@ -1,3 +1,4 @@
+import loadImage from 'blueimp-load-image'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -9,7 +10,6 @@ import { useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
 import { signUpUseCase } from '@/useCases'
 import { getProfileImagePath, uploadFile } from '@/utils/uploadFile'
-import loadImage from 'blueimp-load-image'
 
 type FormValues = {
   name: string
