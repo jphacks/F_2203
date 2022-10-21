@@ -12,6 +12,8 @@ import { GetUserByCustomIdQuery } from '@/generated/graphql'
 import { useAuthUser } from '@/hooks/useAuth'
 import { useQueryFavoriteArtists, useQueryUserPosts } from '@/hooks/useUser'
 import { createHasuraClient } from '@/lib/hasuraClient'
+import ConfettiModal from '@/components/ConfettiModal'
+import ProfileEditModal from '@/components/ProfileEditModal'
 
 type Props = {
   user: GetUserByCustomIdQuery['users'][0]
@@ -29,7 +31,7 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
     }
   }, [authUser?.uid, user.uid])
 
-  if (isLoading || isLoadingFavoriteArtists ) {
+  if (isLoading || isLoadingFavoriteArtists) {
     return <Loading />
   }
 
@@ -43,6 +45,11 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
           <NoContent isMine={isMine} />
         ) : (
           <div className='min-w-full'>
+            <ProfileEditModal
+              user={user}
+              isOpen={true}
+              closeModal={() => { }}
+            />
             <div className='flex-row grid grid-cols-3 gap-4'>
               <div className='card bg-base-100 shadow-xl'>
                 <div className='card-body'>
@@ -59,6 +66,7 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
                     <h2 className='card-title w-full mx-2 justify-center'>{user.name}</h2>
                   </div>
                   <p>{user.bio}</p>
+                  {isMine && <p>プロフィール編集</p>}
                 </div>
               </div>
               <div className='card bg-base-100 shadow-xl'>
@@ -78,14 +86,14 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
               </div>
               <div className='card bg-base-100 shadow-xl'>
                 <div className='card-body'>
-                    <h2 className='card-title'>アーティスト別 投稿数</h2>
-                    <p className='text-blue-500 text-xl text-center'>開発中..</p>
+                  <h2 className='card-title'>アーティスト別 投稿数</h2>
+                  <p className='text-blue-500 text-xl text-center'>開発中..</p>
                 </div>
               </div>
               <div className='card col-span-2 bg-base-100 shadow-xl'>
                 <div className='card-body'>
                   <h2 className='card-title'>お気に入りアーティスト🎤</h2>
-                    <FavoriteArtists uid={user.uid} favoriteArtists={favoriteArtistsData?.artists ?? []} />
+                  <FavoriteArtists uid={user.uid} favoriteArtists={favoriteArtistsData?.artists ?? []} />
                 </div>
               </div>
             </div>
