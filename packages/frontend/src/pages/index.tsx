@@ -26,7 +26,7 @@ const Home: NextPageWithLayout = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          キャッチコピーを入れる
+          オタク自ら聖地を作ってこう！
         </h1>
 
         <p className={styles.description}>
