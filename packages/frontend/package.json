@@ -39,6 +39,7 @@
     "@graphql-codegen/introspection": "^2.2.1",
     "@graphql-codegen/typescript-graphql-request": "^4.5.6",
     "@graphql-codegen/typescript-operations": "^2.5.4",
+    "@types/blueimp-load-image": "^5.16.0",
     "@types/google.maps": "^3.50.2",
     "@types/node": "18.7.23",
     "@types/react": "18.0.21",

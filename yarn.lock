@@ -1735,6 +1735,11 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.3.tgz#472eaab5f15c1ffdd7f8628bd4c4f753995ec79e"
   integrity sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==
 
+"@types/blueimp-load-image@^5.16.0":
+  version "5.16.0"
+  resolved "https://registry.yarnpkg.com/@types/blueimp-load-image/-/blueimp-load-image-5.16.0.tgz#269bb2861154f7b615f2ba05a7270a99efefda97"
+  integrity sha512-Q2t0/xly180IV7Ybu5pGk9MC/lrnqPZtplLh3R5T0i2tnE8Nt20gtjkLtliCD/gAlQHHScrjmP607ee++FAgpg==
+
 "@types/google.maps@3.49.2":
   version "3.49.2"
   resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.49.2.tgz#9640491ec3aa96c9de1466894117ce81c02588df"
