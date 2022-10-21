@@ -41,6 +41,7 @@ const Home: NextPageWithLayout = () => {
             objectFit='contain'
             style={{ width: "auto", maxHeight: "600px", maxWidth: "100%" }}
             src={"/images/eyecatch.jpg"}
+            alt="オタクの履歴書"
           ></Image>
         </div>
 
@@ -77,6 +78,7 @@ const Home: NextPageWithLayout = () => {
                 objectFit='contain'
                 style={{ width: "auto", maxHeight: "600px", maxWidth: "100%" }}
                 src={"/images/map-location.svg"}
+                alt="足あとを残す"
               />
               <p className='font-bold text-sm' >足あとを残す</p>
               <p className='font-extralight text-xs text-slate-500'>
@@ -90,6 +92,7 @@ const Home: NextPageWithLayout = () => {
                 objectFit='contain'
                 style={{ width: "auto", maxHeight: "600px", maxWidth: "100%" }}
                 src={"/images/music.svg"}
+                alt="アーティストを紐づけ"
               />
               <p className='font-bold text-sm'>アーティストを紐づけ</p>
               <p className='font-extralight text-xs text-slate-500'>足あとにアーティストを指定すれば、どんなアーティストのイベントに参加したのかが一目で分かります。同じアーティストが好きなユーザーを探すこともできます。</p>
@@ -101,6 +104,7 @@ const Home: NextPageWithLayout = () => {
                 objectFit='contain'
                 style={{ width: "auto", maxHeight: "600px", maxWidth: "100%" }}
                 src={"/images/user.svg"}
+                alt="自分だけのプロフィール"
               />
               <p className='font-bold text-sm'>自分だけのプロフィール</p>
               <p className='font-extralight text-xs text-slate-500' >ライブやイベントを記録すると、プロフィールに足あとが追加されます。足あとの記録が、あなたの魅力を伝えてくれるはずです。</p>
