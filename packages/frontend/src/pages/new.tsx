@@ -158,7 +158,7 @@ const New: NextPage = () => {
                 <textarea
                   id='desc'
                   className='bg-gray-50 border border-gray-300 text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-500 block w-full p-2.5'
-                  placeholder='詳細'
+                  placeholder='一言日記'
                   rows={4}
                   {...register('desc')}
                 />
