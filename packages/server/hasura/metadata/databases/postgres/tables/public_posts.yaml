@@ -1,0 +1,10 @@
+table:
+  schema: public
+  name: posts
+object_relationships:
+  - name: artist
+    using:
+      foreign_key_constraint_on: spotify_id
+  - name: user
+    using:
+      foreign_key_constraint_on: uid

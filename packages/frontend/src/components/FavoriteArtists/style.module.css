@@ -1,0 +1,22 @@
+.mask {
+  mask-image: linear-gradient(
+    to left,
+    transparent,
+    black 40px,
+    black calc(100% - 40px),
+    transparent
+  );
+}
+
+.slideshow {
+  display: flex;
+  animation: loop-slide 50s linear infinite both;
+}
+@keyframes loop-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}

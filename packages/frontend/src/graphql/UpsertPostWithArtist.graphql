@@ -1,0 +1,41 @@
+mutation UpsertPostWithArtist(
+  $title: String!
+  $message: String = ""
+  $location_name: String!
+  $location_lng: float8!
+  $location_lat: float8!
+  $link: String = ""
+  $uid: String!
+  $spotify_id: String!
+  $name: String!
+  $image_url: String!
+) {
+  insert_posts_one(
+    object: {
+      title: $title
+      message: $message
+      location_name: $location_name
+      location_lng: $location_lng
+      location_lat: $location_lat
+      link: $link
+      uid: $uid
+      artist: {
+        data: {
+          spotify_id: $spotify_id
+          name: $name
+          image_url: $image_url
+          favoriteArtists: {
+            data: { uid: $uid }
+            on_conflict: {
+              constraint: favoriteArtists_spotify_id_uid_key
+              update_columns: spotify_id
+            }
+          }
+        }
+        on_conflict: { constraint: artists_spotify_id_key, update_columns: image_url }
+      }
+    }
+  ) {
+    id
+  }
+}

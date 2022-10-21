@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --main-bg-color: #f0f5f9;
+  --text-primary: #333333;
+  --text-sub: #bababa;
+  --primary: #3b82f6;
+  --accent: #001b36;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* button */
+.bt_color-primary {
+  background-color: var(--primary);
+  color: white;
+}
+.bt_color-primary:hover {
+  opacity: 0.7;
+}
+
+.bt_color-secondary {
+  background-color: white;
+}
+
+.bg_main-color {
+  background-color: var(--main-bg-color);
+}
+
+/* information window */
+.gm-style .gm-style-iw-c {
+  padding-right: 10px !important;
+  padding-bottom: 0px !important;
+  max-width: 500px !important;
+  max-height: 326px !important;
+  min-width: 0px !important;
+  position: absolute;
+  box-sizing: border-box;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  /* transform: translate(-50%, -100%);
+  /* background-color: #dd9191; */
+  border-radius: 8px;
+  border-width: 4px;
+  /* border-color: aqua; */
+  border-image: linear-gradient(to right, #ec4899 0%, #eab308 100%);
+  border-image-slice: 1;
+  /* box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3); */
+}
+
+.three-text {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  text-transform: uppercase;
+  font-family: verdana;
+  font-size: 6em;
+  font-weight: 700;
+  color: rgb(223, 237, 254);
+  text-shadow: 1px 1px 1px rgb(59 130 246), 1px 2px 1px rgb(59 130 246), 1px 3px 1px rgb(59 130 246),
+    1px 4px 1px rgb(59 130 246), 1px 5px 1px rgb(59 130 246), 1px 6px 1px rgb(59 130 246),
+    1px 7px 1px rgb(59 130 246), 1px 8px 1px rgb(59 130 246), 1px 9px 1px rgb(59 130 246),
+    1px 10px 1px rgb(59 130 246), 1px 18px 6px rgba(16, 16, 16, 0.4),
+    1px 22px 10px rgba(16, 16, 16, 0.2), 1px 25px 35px rgba(16, 16, 16, 0.2),
+    1px 30px 60px rgba(16, 16, 16, 0.4);
+}
+
+/* @media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+} */
