@@ -36,7 +36,7 @@ const SignUp: NextPage = () => {
         const data = await hasuraClient.getUserByUid({ uid: uid })
         if (data.user != null) {
           //登録済みユーザーの場合
-          // router.push(`/profile/${data.user?.custom_id}`)
+          router.push(`/profile/${data.user?.custom_id}`)
         }
       }
     }
@@ -62,8 +62,11 @@ const SignUp: NextPage = () => {
         setIsLoading(false)
         return
       }
+      //画像アップロード
+      const url = await uploadImage()
+
       //ユーザー登録
-      await signUpUseCase.createUser(user?.uid as string, data.name, data.name_id, data.bio)
+      await signUpUseCase.createUser(user?.uid as string, data.name, data.name_id, data.bio, url)
       toast.dismiss()
       setIsLoading(false)
       toast.success('ユーザー登録登録が完了しました!🎉')
@@ -77,22 +80,17 @@ const SignUp: NextPage = () => {
   }
 
   // Upload image function
-  const uploadImage = async (file: File) => {
-    if (!user?.uid) return;
-    console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
-
-    const canvas = await loadImage(file, {
+  const uploadImage = async () => {
+    if (!user?.uid || preview.length === 0) return "";
+    const canvas = await loadImage(preview, {
       maxWidth: 500,
       canvas: true
     })
-    console.log('圧縮ご：', canvas)
-    //@ts-ignore
-    canvas.image.toBlob(async (blob) => {
-      console.log(blob.size / 1024 / 1024 + "MB")
-      const result = await uploadFile(getProfileImagePath(user.uid), blob)
-      console.log(result)
-    })
 
+    //@ts-ignore
+    const blob = await new Promise(resolve => canvas.image.toBlob(resolve)) as Blob;
+    const result = await uploadFile(getProfileImagePath(user.uid), blob)
+    return result
     // toast.promise(, {
     //     loading: 'Uploading...',
     //     success: '画像のアップロードに成功しました!🎉',
@@ -113,7 +111,6 @@ const SignUp: NextPage = () => {
 
     setPreview(window.URL.createObjectURL(file))
     setFileName(file.name)
-    uploadImage(file)
   }
 
   return (

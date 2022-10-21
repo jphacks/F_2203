@@ -1,5 +1,5 @@
 import { storage } from "@/lib/firebase"
-import { ref, StorageReference, uploadBytes } from "firebase/storage"
+import { getDownloadURL, ref, StorageReference, uploadBytes } from "firebase/storage"
 
 export const getProfileImagePath = (uid: string) => {
     return ref(storage, "avatar/" + uid)
@@ -7,13 +7,14 @@ export const getProfileImagePath = (uid: string) => {
 
 export const uploadFile = async (ref: StorageReference, file: Blob) => {
     const result = await uploadBytes(ref, file)
-        .then((snapshot) => {
+        .then(async (snapshot) => {
             console.log(snapshot)
-            return snapshot.ref
+            const url = await getDownloadURL(snapshot.ref)
+            return url
         })
         .catch((error) => {
             console.error(error)
-            return false
+            return ""
         })
     return result
 }
