@@ -14,7 +14,9 @@ const Header: React.FC = () => {
   return (
     <div className='navbar bg-white'>
       <div className='flex-1'>
-        <a className='btn btn-ghost normal-case text-xl text-gray-800'>オタクの履歴書</a>
+        <Link href={"/"}>
+          <a className='btn btn-ghost normal-case text-xl text-gray-800'>オタクの履歴書</a>
+        </Link>
       </div>
       {isLoggedIn ? (
         <div className='flex-none'>
