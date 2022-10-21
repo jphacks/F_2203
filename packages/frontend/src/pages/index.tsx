@@ -1,12 +1,12 @@
 import type { NextPageWithLayout } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { Layout } from '@/components/Layout'
-import { useEffect, useState } from 'react'
-import { useAuthUser } from '@/hooks/useAuth'
-import Link from 'next/link'
 import Spacer from '@/components/Space'
+import { useAuthUser } from '@/hooks/useAuth'
 
 const Home: NextPageWithLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
