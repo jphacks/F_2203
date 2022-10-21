@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { FC, useEffect, useReducer, useState } from 'react'
-import toast from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import styles from '../styles/Login.module.css'
 import Loading from '@/components/Loading'
 import { useAuthUser } from '@/hooks/useAuth'
@@ -31,7 +31,7 @@ const Login: FC = () => {
       setIsLoading(false)
     }
     data()
-  }, [user, router])
+  }, [user, router, hasuraClient])
 
   const logIn = async () => {
     try {
@@ -53,6 +53,7 @@ const Login: FC = () => {
       className={`mx-auto my-auto min-h-screen justify-center flex items-center ${styles.container}`}
     >
       <div>
+        <Toaster />
         <div className='justify-center flex mb-40'>
           <h1 className='text-7xl'>Welcome!</h1>
         </div>
