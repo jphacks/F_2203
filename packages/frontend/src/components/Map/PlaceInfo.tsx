@@ -17,56 +17,17 @@ type SelectedPin = {
   artistName: string
 }
 
+type IPinProps = {
+  p: Post,
+  setSelected: React.Dispatch<React.SetStateAction<SelectedPin | null | undefined>>
+}
+
 const PlaceInfo: React.FC<IPlaceInfo> = ({ size, posts }) => {
   const [selected, setSelected] = useState<SelectedPin | null>()
 
-  const Pin = (p: Post) => {
-    //同じ場所の登録の場合にiconがかぶるのでランダムに少しずらしてあげる
-    const lat = useMemo(() => Math.random() * 0.001 + p.location_lat, [p])
-    const lng = useMemo(() => Math.random() * 0.001 + p.location_lng, [p])
-
-    return (
-      <MarkerF
-        key={p.id}
-        position={{
-          lat: lat,
-          lng: lng,
-        }}
-        onClick={() => {
-          setSelected({
-            lat: lat,
-            lng: lng,
-            title: p.title ?? '',
-            message: p.message ?? '',
-            artistName: p.artist?.name ?? '',
-          })
-          // <InfoWindow>が描画。
-        }}
-        onMouseOver={() => {
-          setSelected({
-            lat: lat,
-            lng: lng,
-            title: p.title ?? '',
-            message: p.message ?? '',
-            artistName: p.artist?.name ?? '',
-          })
-        }}
-        onMouseOut={() => {
-          setSelected(null)
-        }}
-        icon={{
-          url: '/images/musical.png',
-          origin: new window.google.maps.Point(0, 0),
-          anchor: new window.google.maps.Point(15, 15),
-          scaledSize: new window.google.maps.Size(50, 50),
-          // アイコン表示の設定。
-        }}
-      />
-    )
-  }
   return (
     <>
-      {posts.map((p) => Pin(p))}
+      {posts.map((p) => <Pin key={p.id} p={p} setSelected={setSelected} />)}
       {selected && (
         <InfoWindowF
           // key={`${selected.location.position.lat * selected.location.position.lng} info`}
@@ -94,3 +55,50 @@ const PlaceInfo: React.FC<IPlaceInfo> = ({ size, posts }) => {
 }
 
 export default PlaceInfo
+
+
+  // eslint-disable-next-line react/display-name
+const Pin = React.memo(({ p, setSelected }: IPinProps) => {
+  //同じ場所の登録の場合にiconがかぶるのでランダムに少しずらしてあげる
+  const lat = useMemo(() => Math.random() * 0.001 + p.location_lat, [p])
+  const lng = useMemo(() => Math.random() * 0.001 + p.location_lng, [p])
+
+  return (
+    <MarkerF
+      key={p.id}
+      position={{
+        lat: lat,
+        lng: lng,
+      }}
+      onClick={() => {
+        setSelected({
+          lat: lat,
+          lng: lng,
+          title: p.title ?? '',
+          message: p.message ?? '',
+          artistName: p.artist?.name ?? '',
+        })
+        // <InfoWindow>が描画。
+      }}
+      onMouseOver={() => {
+        setSelected({
+          lat: lat,
+          lng: lng,
+          title: p.title ?? '',
+          message: p.message ?? '',
+          artistName: p.artist?.name ?? '',
+        })
+      }}
+      onMouseOut={() => {
+        setSelected(null)
+      }}
+      icon={{
+        url: '/images/musical.png',
+        origin: new window.google.maps.Point(0, 0),
+        anchor: new window.google.maps.Point(15, 15),
+        scaledSize: new window.google.maps.Size(50, 50),
+        // アイコン表示の設定。
+      }}
+    />
+  )
+})

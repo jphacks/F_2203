@@ -211,7 +211,7 @@ const New: NextPage = () => {
                   <p className='text-xs text-red-600'>{errors.location_name.message}</p>
                 )}
               </div>
-              <div className='mb-6 items-center'>
+              {/* <div className='mb-6 items-center'>
                 <input
                   id='link'
                   type='text'
@@ -220,7 +220,7 @@ const New: NextPage = () => {
                   {...register('link')}
                 />
                 {errors?.link && <p className='text-xs text-red-600'>{errors.link.message}</p>}
-              </div>
+              </div> */}
               <div className='text-center'>
                 <button type='submit' className={styles.button} disabled={isLoading}>
                   <span>この内容で記録する</span>

@@ -21,7 +21,7 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
   const [isMine, setIsMine] = useState<boolean>(false)
   const authUser = useAuthUser()
   const { data: postsData, isLoading } = useQueryUserPosts(user.uid)
-  const { data: favoriteArtistsData } = useQueryFavoriteArtists(user.uid)
+  const { data: favoriteArtistsData, isLoading: isLoadingFavoriteArtists } = useQueryFavoriteArtists(user.uid)
 
   useEffect(() => {
     if (authUser?.uid === user.uid) {
@@ -29,7 +29,7 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
     }
   }, [authUser?.uid, user.uid])
 
-  if (isLoading) {
+  if (isLoading || isLoadingFavoriteArtists ) {
     return <Loading />
   }
 
@@ -85,7 +85,7 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
               <div className='card col-span-2 bg-base-100 shadow-xl'>
                 <div className='card-body'>
                   <h2 className='card-title'>お気に入りアーティスト🎤</h2>
-                  <FavoriteArtists uid={user.uid} />
+                    <FavoriteArtists uid={user.uid} favoriteArtists={favoriteArtistsData?.artists ?? []} />
                 </div>
               </div>
             </div>
