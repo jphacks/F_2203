@@ -1,6 +1,6 @@
 # オタクの履歴書
 デモ
-https://ota-resume.vercel.app/profile/doruota007
+https://ota-resume.vercel.app
 
 ![オタクの履歴書](https://user-images.githubusercontent.com/53213591/197217543-62292366-f905-4b88-b64a-9ba75385324b.png)
 
