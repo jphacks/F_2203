@@ -6,6 +6,7 @@ import { Layout } from '@/components/Layout'
 import Loading from '@/components/Loading'
 import Map from '@/components/Map/Map'
 import NoContent from '@/components/NoContent'
+import Seo from '@/components/Seo';
 import Spacer from '@/components/Space'
 import Timeline from '@/components/Timeline'
 import { GetUserByCustomIdQuery } from '@/generated/graphql'
@@ -37,6 +38,7 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
 
   return (
     <div className='bg_main-color min-h-screen'>
+      <Seo pageTitle={user.name ?? "プロフィール"} />
       <div className='my-auto justify-center items-center max-w-5xl mx-auto'>
         <h1 className='text-5xl font-bold pt-5 pb-10 text-center dark:text-white'>履歴書</h1>
         {!postsData?.posts || postsData?.posts.length == 0 ? (
