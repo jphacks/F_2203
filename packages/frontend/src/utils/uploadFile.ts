@@ -9,7 +9,6 @@ export const getProfileImagePath = (uid: string) => {
 export const uploadFile = async (ref: StorageReference, file: Blob) => {
   const result = await uploadBytes(ref, file)
     .then(async (snapshot) => {
-      console.log(snapshot)
       const url = await getDownloadURL(snapshot.ref)
       return url
     })
