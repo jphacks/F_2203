@@ -37,7 +37,7 @@
 #### フレームワーク・ライブラリ・モジュール
 * フロント： TypeScript / React / Next.js / Tailwind.css / GraphQL Code Generator
 * バックエンド： hasura / PostgreSQL 
-* その他： Github Actions / Firebase (auth, storage) / Vercel / 
+* その他： Github Actions / Firebase (auth, storage) / Vercel / figma
 
 <img src="https://user-images.githubusercontent.com/53213591/197212562-ad7ccc77-f6e4-4b2e-9b16-1f5c70f659fd.png" width="600"/>
 
