@@ -171,7 +171,7 @@ const SignUp: NextPage = () => {
                 {errors?.name && <p className='text-xs text-red-600'>{errors.name.message}</p>}
               </div>
               <div className='mb-1 flex flex-row items-center'>
-                <div className='whitespace-nowrap'>https://hogehoge.com/</div>
+                <div className='whitespace-nowrap'>https://ota-resume.vercel.app/</div>
                 <input
                   id='name_id'
                   type='text'
