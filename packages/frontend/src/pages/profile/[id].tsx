@@ -6,6 +6,7 @@ import { Layout } from '@/components/Layout'
 import Loading from '@/components/Loading'
 import Map from '@/components/Map/Map'
 import NoContent from '@/components/NoContent'
+import ProfileEditModal from '@/components/ProfileEditModal'
 import Seo from '@/components/Seo';
 import Spacer from '@/components/Space'
 import Timeline from '@/components/Timeline'
@@ -13,7 +14,6 @@ import { GetUserByCustomIdQuery } from '@/generated/graphql'
 import { useAuthUser } from '@/hooks/useAuth'
 import { useQueryFavoriteArtists, useQueryUserPosts } from '@/hooks/useUser'
 import { createHasuraClient } from '@/lib/hasuraClient'
-import ProfileEditModal from '@/components/ProfileEditModal'
 
 type Props = {
   user: GetUserByCustomIdQuery['users'][0]

@@ -1,12 +1,12 @@
-import { GetUserByCustomIdQuery } from '@/generated/graphql'
-import { createHasuraClient } from '@/lib/hasuraClient'
-import { getProfileImagePath, uploadFile } from '@/utils/uploadFile'
 import { Dialog, Transition } from '@headlessui/react'
 import loadImage from 'blueimp-load-image'
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, Fragment, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { GetUserByCustomIdQuery } from '@/generated/graphql'
+import { createHasuraClient } from '@/lib/hasuraClient'
+import { getProfileImagePath, uploadFile } from '@/utils/uploadFile'
 
 type IConfettiModal = {
     user: GetUserByCustomIdQuery['users'][0]

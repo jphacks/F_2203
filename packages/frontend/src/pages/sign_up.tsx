@@ -1,6 +1,5 @@
 import loadImage from 'blueimp-load-image'
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -42,7 +41,7 @@ const SignUp: NextPage = () => {
       }
     }
     data()
-  }, [user, router])
+  }, [user, router, hasuraClient])
 
   const {
     register,
