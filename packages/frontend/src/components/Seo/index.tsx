@@ -21,6 +21,7 @@ const Seo: React.FC<MetaData> = ({
 
   return (
     <Head>
+      <link rel='icon' href='/favicon.ico' />
       <title>{title ? `${title} | ${defaultTitle}` : defaultTitle}</title>
       <meta name="description" content={description} key="description"/>
       <meta property="og:title" content={title} key="og_title"/>
