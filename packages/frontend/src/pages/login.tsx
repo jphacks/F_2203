@@ -42,7 +42,7 @@ const Login: FC = () => {
     } catch (err) {
       setIsLoading(false)
       toast.error(`ログインに失敗しました😥 時間を空けてもう一度試してみてください`)
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -54,7 +54,7 @@ const Login: FC = () => {
       className={`mx-auto my-auto min-h-screen justify-center flex items-center ${styles.container}`}
     >
       <div>
-        <Seo pageTitle='ログイン'/>
+        <Seo pageTitle='ログイン' />
         <Toaster />
         <div className='justify-center flex mb-40'>
           <h1 className='text-7xl'>Welcome!</h1>

@@ -6,6 +6,7 @@ import { Layout } from '@/components/Layout'
 import Loading from '@/components/Loading'
 import Map from '@/components/Map/Map'
 import NoContent from '@/components/NoContent'
+import ProfileEditModal from '@/components/ProfileEditModal'
 import Seo from '@/components/Seo';
 import Spacer from '@/components/Space'
 import Timeline from '@/components/Timeline'
@@ -20,6 +21,7 @@ type Props = {
 
 const Resume: NextPageWithLayout<Props> = ({ user }) => {
   const [isMine, setIsMine] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const authUser = useAuthUser()
   const { data: postsData, isLoading } = useQueryUserPosts(user.uid)
   const { data: favoriteArtistsData, isLoading: isLoadingFavoriteArtists } = useQueryFavoriteArtists(user.uid)
@@ -30,11 +32,17 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
     }
   }, [authUser?.uid, user.uid])
 
-  if (isLoading || isLoadingFavoriteArtists ) {
+  if (isLoading || isLoadingFavoriteArtists) {
     return <Loading />
   }
 
   const point = (postsData?.posts.length ?? 0) + (favoriteArtistsData?.artists.length ?? 0)
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
 
   return (
     <div className='bg_main-color min-h-screen'>
@@ -45,6 +53,11 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
           <NoContent isMine={isMine} />
         ) : (
           <div className='min-w-full'>
+            <ProfileEditModal
+              user={user}
+              isOpen={isModalOpen}
+              closeModal={closeModal}
+            />
             <div className='flex-row grid grid-cols-3 gap-4'>
               <div className='card bg-base-100 shadow-xl'>
                 <div className='card-body'>
@@ -61,6 +74,15 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
                     <h2 className='card-title w-full mx-2 justify-center'>{user.name}</h2>
                   </div>
                   <p>{user.bio}</p>
+                  {isMine &&
+                    <button
+                      onClick={openModal}
+                      className='text-white hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-600 font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center'
+                      style={{ backgroundColor: '#0162b9' }}
+                    >
+                      プロフィール編集
+                    </button>
+                  }
                 </div>
               </div>
               <div className='card bg-base-100 shadow-xl'>
@@ -80,14 +102,14 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
               </div>
               <div className='card bg-base-100 shadow-xl'>
                 <div className='card-body'>
-                    <h2 className='card-title'>アーティスト別 投稿数</h2>
-                    <p className='text-blue-500 text-xl text-center'>開発中..</p>
+                  <h2 className='card-title'>アーティスト別 投稿数</h2>
+                  <p className='text-blue-500 text-xl text-center'>開発中..</p>
                 </div>
               </div>
               <div className='card col-span-2 bg-base-100 shadow-xl'>
                 <div className='card-body'>
                   <h2 className='card-title'>お気に入りアーティスト🎤</h2>
-                    <FavoriteArtists uid={user.uid} favoriteArtists={favoriteArtistsData?.artists ?? []} />
+                  <FavoriteArtists uid={user.uid} favoriteArtists={favoriteArtistsData?.artists ?? []} />
                 </div>
               </div>
             </div>

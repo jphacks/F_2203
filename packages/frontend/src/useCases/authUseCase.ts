@@ -23,7 +23,7 @@ export default class AuthUseCase {
       .catch((error) => {
         toast.dismiss()
         const errorCode = error.code
-        console.log(errorCode)
+        console.error(errorCode)
         throw error
       })
   }

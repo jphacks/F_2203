@@ -1,0 +1,11 @@
+mutation UpdateUser($uid: String!, $avatar_url: String = "", $bio: String = "", $custom_id: String = "", $instagram_id: String = "", $name: String = "", $twitter_id: String = "", $updated_at: timestamp = "") {
+  update_users_by_pk(pk_columns: {uid: $uid}, _set: {avatar_url: $avatar_url, bio: $bio, custom_id: $custom_id, instagram_id: $instagram_id, name: $name, twitter_id: $twitter_id, updated_at: $updated_at }) {
+    avatar_url
+    bio
+    custom_id
+    instagram_id
+    name
+    updated_at
+    twitter_id
+  }
+}

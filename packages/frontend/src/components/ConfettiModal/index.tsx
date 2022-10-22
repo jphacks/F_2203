@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import Confetti from 'react-confetti'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import styles from './style.module.css'
