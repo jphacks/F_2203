@@ -37,7 +37,7 @@ const Home: NextPageWithLayout = () => {
             height={600}
             objectFit='contain'
             style={{ width: "auto", maxHeight: "600px", maxWidth: "100%" }}
-            src={"/images/eyecatch.jpg"}
+            src={"/images/eyecatch.png"}
             alt="オタクの履歴書"
           ></Image>
         </div>
