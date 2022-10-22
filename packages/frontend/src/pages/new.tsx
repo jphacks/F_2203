@@ -142,7 +142,7 @@ const New: NextPage = () => {
                   id='title'
                   type='text'
                   className='bg-gray-50 border border-gray-300 text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-500 block w-full p-2.5'
-                  placeholder='タイトル'
+                  placeholder='タイトル(必須)'
                   {...register('title', {
                     required: {
                       value: true,
@@ -171,7 +171,7 @@ const New: NextPage = () => {
                   loadOptions={getArtists}
                   defaultOptions
                   onChange={handleInputChange}
-                  placeholder={'アーティスト名 🎤'}
+                  placeholder={'アーティスト名 🎤(必須)'}
                   theme={(theme) => ({
                     ...theme,
                     borderRadius: 6,
