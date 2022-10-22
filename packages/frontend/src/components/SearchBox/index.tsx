@@ -60,7 +60,7 @@ function ReadySearchBox({ onSelectAddress, defaultValue }: ISearchBoxProps) {
       <Combobox onChange={handleSelect} value={value}>
         <Combobox.Input
           onChange={handleChange}
-          placeholder='場所 📍'
+          placeholder='場所 📍(必須)'
           id='location'
           value={value}
           disabled={!ready}

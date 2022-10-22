@@ -71,7 +71,7 @@ const ConfettiModal: React.FC<IConfettiModal> = ({
 
                   <div className='mt-4 justify-between flex mx-0'>
                     <a
-                      href={`http://twitter.com/share?url=${hostname}/${userCustmoId}&text=${artistName}との履歴を追加したよ！`}
+                      href={`http://twitter.com/share?url=${hostname}/profile/${userCustmoId}&text=${artistName}との履歴を追加したよ！`}
                       target='_blank'
                       rel='noreferrer'
                       className='rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
