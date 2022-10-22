@@ -6,6 +6,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast, { Toaster } from 'react-hot-toast'
 import styles from '../styles/SignUp.module.css'
+import Seo from '@/components/Seo'
 import { useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
 import { signUpUseCase } from '@/useCases'
@@ -81,21 +82,22 @@ const SignUp: NextPage = () => {
 
   // Upload image function
   const uploadImage = async () => {
-    if (!user?.uid || preview.length === 0) return "";
-    const canvas = await loadImage(preview, {
-      maxWidth: 500,
-      canvas: true
-    })
+    try {
+      if (!user?.uid || preview.length === 0) return ''
+      const canvas = await loadImage(preview, {
+        maxWidth: 500,
+        canvas: true,
+      })
 
-    //@ts-ignore
-    const blob = await new Promise(resolve => canvas.image.toBlob(resolve)) as Blob;
-    const result = await uploadFile(getProfileImagePath(user.uid), blob)
-    return result
-    // toast.promise(, {
-    //     loading: 'Uploading...',
-    //     success: '画像のアップロードに成功しました!🎉',
-    //     error: `画像のアップロードに失敗しました😥 もう一度試してみてください`,
-    // })
+      //@ts-ignore
+      const blob = (await new Promise((resolve) => canvas.image.toBlob(resolve))) as Blob
+      const result = await uploadFile(getProfileImagePath(user.uid), blob)
+      return result
+    } catch (e) {
+      toast.dismiss()
+      toast.error(`画像のアップロードに失敗しました😥 もう一度試してみてください`)
+      throw e
+    }
   }
 
   //ローカルから画像を追加する
@@ -109,12 +111,20 @@ const SignUp: NextPage = () => {
       return
     }
 
+    const sizeLimit = 1024 * 1024 * 5; // 制限サイズ 5MB
+    if (file.size > sizeLimit) {
+      // ファイルサイズが制限以上
+      alert('ファイルサイズは5MB以下にしてください');
+      return
+    }
+
     setPreview(window.URL.createObjectURL(file))
     setFileName(file.name)
   }
 
   return (
     <div className={styles.container}>
+      <Seo pageTitle='ユーザー登録' />
       <Toaster />
       <main className='mx-auto my-auto min-h-screen justify-center items-center flex'>
         <div>
