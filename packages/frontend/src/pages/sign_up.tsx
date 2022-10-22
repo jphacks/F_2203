@@ -6,6 +6,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast, { Toaster } from 'react-hot-toast'
 import styles from '../styles/SignUp.module.css'
+import Seo from '@/components/Seo';
 import { useAuthUser } from '@/hooks/useAuth'
 import { createHasuraClient } from '@/lib/hasuraClient'
 import { signUpUseCase } from '@/useCases'
@@ -115,6 +116,7 @@ const SignUp: NextPage = () => {
 
   return (
     <div className={styles.container}>
+      <Seo pageTitle='ユーザー登録'/>
       <Toaster />
       <main className='mx-auto my-auto min-h-screen justify-center items-center flex'>
         <div>
