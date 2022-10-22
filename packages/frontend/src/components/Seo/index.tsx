@@ -14,7 +14,7 @@ const Seo: React.FC<MetaData> = ({
 }) => {
   const defaultTitle = 'オタクの履歴書'
   const defaultDescription = 'オタク自ら聖地を作ってこう！'
-  const defaultImage = 'https://jphacks-f2203-pky.vercel.app/ogp.png'
+  const defaultImage = 'https://ota-resume.vercel.app/ogp.png'
 
   const title = pageTitle ? `${pageTitle} | ${defaultTitle}` : defaultTitle
   const description = pageDescription ? pageDescription : defaultDescription
