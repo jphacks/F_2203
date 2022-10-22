@@ -11,6 +11,7 @@ import { GetArtistsApiResponse } from './api/artists'
 import ConfettiModal from '@/components/ConfettiModal'
 import Loading from '@/components/Loading'
 import { SearchBox } from '@/components/SearchBox'
+import Seo from '@/components/Seo';
 import { useAuthUser } from '@/hooks/useAuth'
 import { useQueryUser } from '@/hooks/useUser'
 import fetcher from '@/lib/fetcher'
@@ -121,6 +122,7 @@ const New: NextPage = () => {
 
   return (
     <div className='bg-[#F0F5F9]'>
+      <Seo pageTitle='投稿'/>
       <Toaster />
       <ConfettiModal
         userName={userData?.user?.name ?? ''}
