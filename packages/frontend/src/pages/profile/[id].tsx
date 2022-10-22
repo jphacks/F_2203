@@ -12,7 +12,6 @@ import { GetUserByCustomIdQuery } from '@/generated/graphql'
 import { useAuthUser } from '@/hooks/useAuth'
 import { useQueryFavoriteArtists, useQueryUserPosts } from '@/hooks/useUser'
 import { createHasuraClient } from '@/lib/hasuraClient'
-import ConfettiModal from '@/components/ConfettiModal'
 import ProfileEditModal from '@/components/ProfileEditModal'
 
 type Props = {
@@ -21,6 +20,7 @@ type Props = {
 
 const Resume: NextPageWithLayout<Props> = ({ user }) => {
   const [isMine, setIsMine] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const authUser = useAuthUser()
   const { data: postsData, isLoading } = useQueryUserPosts(user.uid)
   const { data: favoriteArtistsData, isLoading: isLoadingFavoriteArtists } = useQueryFavoriteArtists(user.uid)
@@ -36,6 +36,12 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
   }
 
   const point = (postsData?.posts.length ?? 0) + (favoriteArtistsData?.artists.length ?? 0)
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
 
   return (
     <div className='bg_main-color min-h-screen'>
@@ -47,8 +53,8 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
           <div className='min-w-full'>
             <ProfileEditModal
               user={user}
-              isOpen={true}
-              closeModal={() => { }}
+              isOpen={isModalOpen}
+              closeModal={closeModal}
             />
             <div className='flex-row grid grid-cols-3 gap-4'>
               <div className='card bg-base-100 shadow-xl'>
@@ -66,7 +72,15 @@ const Resume: NextPageWithLayout<Props> = ({ user }) => {
                     <h2 className='card-title w-full mx-2 justify-center'>{user.name}</h2>
                   </div>
                   <p>{user.bio}</p>
-                  {isMine && <p>プロフィール編集</p>}
+                  {isMine &&
+                    <button
+                      onClick={openModal}
+                      className='text-white hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-600 font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center'
+                      style={{ backgroundColor: '#0162b9' }}
+                    >
+                      プロフィール編集
+                    </button>
+                  }
                 </div>
               </div>
               <div className='card bg-base-100 shadow-xl'>
