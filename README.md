@@ -65,9 +65,9 @@ https://github.com/jphacks/F_2203/commit/7dfb8f00a1b133b69c2363d7786d3f358015569
 https://github.com/jphacks/F_2203/commit/3913718410bd840490f23cc8f7ea65606be6760b
 <img src="https://user-images.githubusercontent.com/53213591/197174512-ba7283f4-d022-4948-8ea6-72cad9493dd8.gif" width="500"/>
 
-**登録時のUI** <br/>
-登録したときに表示されるUIの作成。
-アーティストの画像や名前の表示はSpotify APIにリクエストを投げて取得したデータを表示しています。
+**投稿時のUI** <br/>
+投稿したときに表示されるUIの作成。投稿が楽しくなるような仕組みを作りました。 <br/>
+アーティストの画像や名前の表示は、Spotify APIにリクエストを投げて取得したデータを表示しています。
 
 https://github.com/jphacks/F_2203/blob/development/packages/frontend/src/pages/new.tsx
 <img src="https://user-images.githubusercontent.com/53213591/197174792-920db7a1-c9fb-4ea4-88f1-301ecaf8c063.gif" width="500"/>
