@@ -41,7 +41,7 @@
     "@graphql-codegen/typescript-operations": "^2.5.4",
     "@types/blueimp-load-image": "^5.16.0",
     "@types/google.maps": "^3.50.2",
-    "@types/node": "18.7.23",
+    "@types/node": "18.14.0",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "autoprefixer": "^10.4.12",
